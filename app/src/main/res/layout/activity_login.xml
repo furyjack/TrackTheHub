@@ -58,7 +58,7 @@
         android:translationZ="6dp"
         android:clickable="true"
         android:contentDescription="@string/descLoginButton"
-        />
+        tools:targetApi="lollipop" />
 
 </FrameLayout>
 
