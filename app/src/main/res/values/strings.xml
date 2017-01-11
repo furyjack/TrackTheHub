@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TrackTheHub</string>
+    <string name="strUsername">Username</string>
+    <string name="strPassword">Password</string>
+    <string name="descLoginButton">Login Button</string>
+    <string name="DescUsername_field">Username Field</string>
 </resources>
