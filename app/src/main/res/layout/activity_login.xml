@@ -57,8 +57,17 @@
         android:layout_margin="24dp"
         android:translationZ="6dp"
         android:clickable="true"
+        android:onClick="login"
         android:contentDescription="@string/descLoginButton"
         tools:targetApi="lollipop" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:visibility="invisible"
+        android:id="@+id/pbar"
+        />
 
 </FrameLayout>
 

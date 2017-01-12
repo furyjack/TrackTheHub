@@ -52,6 +52,7 @@
             android:layout_margin="24dp"
             android:translationZ="6dp"
             android:clickable="true"
+            android:onClick="login"
             android:contentDescription="@string/descLoginButton"
             tools:targetApi="lollipop" />
 

@@ -45,7 +45,7 @@ public class MyReposFragment extends Fragment {
 
     class ListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Title,desc,star,fork,starttoday;
+        TextView Title,desc,star,fork,starttoday,lang;
 
 
 
@@ -53,6 +53,7 @@ public class MyReposFragment extends Fragment {
             super(itemView);
             Title = (TextView) itemView.findViewById(R.id.tvTitle);
             desc = (TextView) itemView.findViewById(R.id.tvDesc);
+            lang = (TextView) itemView.findViewById(R.id.tvLang);
             star = (TextView) itemView.findViewById(R.id.tvstar);
             fork = (TextView) itemView.findViewById(R.id.tvfork);
             starttoday = (TextView) itemView.findViewById(R.id.tvTodays);
@@ -77,9 +78,10 @@ public class MyReposFragment extends Fragment {
 
             holder.Title.setText(mlist.get(0));
             holder.desc.setText(mlist.get(1));
-            holder.star.setText(mlist.get(2));
-            holder.fork.setText(mlist.get(3));
-            holder.starttoday.setText(mlist.get(4)+ "today");
+            holder.lang.setText(mlist.get(2));
+            holder.star.setText(mlist.get(3));
+            holder.fork.setText(mlist.get(4));
+            holder.starttoday.setText(mlist.get(5)+ " today");
 
         }
 
