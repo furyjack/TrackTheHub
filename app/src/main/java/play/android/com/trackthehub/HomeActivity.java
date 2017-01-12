@@ -6,8 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +18,11 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
-    private int[] tabIcons = {R.drawable.ic_repo,R.drawable.ic_repo,R.drawable.ic_repo};
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    int[] tabIcons = {R.drawable.ic_repo, R.drawable.ic_pullrequest, R.drawable.ic_issues};
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mDrawerToggle;
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
@@ -30,15 +35,51 @@ public class HomeActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new emptyfrag(), "repositories");
         adapter.addFragment(new emptyfrag(), "pull requests");
-        adapter.addFragment(new emptyfrag(),"issues");
+        adapter.addFragment(new emptyfrag(), "issues");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
+        mtoolbar.setTitle(getString(R.string.app_name));
+        setSupportActionBar(mtoolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                mtoolbar, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+
+
+        mDrawerToggle.syncState();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -52,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
@@ -62,26 +103,6 @@ public class HomeActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        mtoolbar= (Toolbar) findViewById(R.id.toolbar);
-        mtoolbar.setTitle(getString(R.string.app_name));
-        setSupportActionBar(mtoolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-
-    }
-
-
 
 
 }
