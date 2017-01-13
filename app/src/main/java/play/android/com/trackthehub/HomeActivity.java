@@ -79,6 +79,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
         mDrawerToggle.syncState();
+
+
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

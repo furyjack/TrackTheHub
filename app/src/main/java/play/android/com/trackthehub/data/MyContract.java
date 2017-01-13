@@ -16,7 +16,7 @@ public class MyContract {
         public static final String COLUMN_FORKS="FORKS";
         public static final String COLUMN_STODAY="STODAY";
 
-        
+
 
 
 
