@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import play.android.com.trackthehub.util.Repo;
 import play.android.com.trackthehub.util.Utils;
 
 
@@ -19,7 +20,7 @@ public class MyReposFragment extends Fragment {
 
 
     RecyclerView mRepoList;
-    ArrayList<String> mlist;
+    ArrayList<Repo> mlist;
 
     public MyReposFragment() {
         // Required empty public constructor
@@ -32,7 +33,8 @@ public class MyReposFragment extends Fragment {
 
         View rootview= inflater.inflate(R.layout.fragment_my_repos, container, false);
         mRepoList=(RecyclerView)rootview.findViewById(R.id.rvRepoList);
-        mlist= Utils.getdata();
+        mlist=new ArrayList<>();
+        mlist.add(Utils.getdata());
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
         mRepoList.setAdapter(new ListAdapter());
 
@@ -76,12 +78,12 @@ public class MyReposFragment extends Fragment {
         @Override
         public void onBindViewHolder(MyReposFragment.ListViewHolder holder, int position) {
 
-            holder.Title.setText(mlist.get(0));
-            holder.desc.setText(mlist.get(1));
-            holder.lang.setText(mlist.get(2));
-            holder.star.setText(mlist.get(3));
-            holder.fork.setText(mlist.get(4));
-            holder.starttoday.setText(mlist.get(5)+ " today");
+            holder.Title.setText(mlist.get(0).Title);
+            holder.desc.setText(mlist.get(0).desc);
+            holder.lang.setText(mlist.get(0).Lang);
+            holder.star.setText(mlist.get(0).stars);
+            holder.fork.setText(mlist.get(0).forks);
+            holder.starttoday.setText(mlist.get(0).startoday+ " today");
 
         }
 

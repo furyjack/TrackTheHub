@@ -4,24 +4,16 @@ package play.android.com.trackthehub.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public  class Utils {
 
-      static ArrayList<String> data=new ArrayList<>(5);
 
-     static public ArrayList<String> getdata()
+
+     static public Repo getdata()
     {
-        data.add("furyjack/ItsMyGang");
-        data.add("its an awesome app:O");
-        data.add("Java");
-        data.add("320");
-        data.add("19");
-        data.add("40");
 
-        return data;
+        return new Repo("furyjack/ItsMyGang","its an awesome app:O","Java","320","19","40",false);
     }
 
   public  static void SetString(String key,String value, Context context)
