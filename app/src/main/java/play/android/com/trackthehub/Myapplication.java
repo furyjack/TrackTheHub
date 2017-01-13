@@ -2,7 +2,6 @@ package play.android.com.trackthehub;
 
 import android.app.Application;
 
-import com.activeandroid.ActiveAndroid;
 import com.facebook.stetho.Stetho;
 
 
@@ -11,7 +10,7 @@ public class Myapplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActiveAndroid.initialize(this);
+      
         Stetho.InitializerBuilder initializerBuilder =
                 Stetho.newInitializerBuilder(this);
 
