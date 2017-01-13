@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:name=".Myapplication"
         android:theme="@style/AppTheme">
+        <meta-data android:name="AA_DB_NAME" android:value="Pickrand.db" />
         <activity android:name=".LoginActivity">
 
             <intent-filter>
