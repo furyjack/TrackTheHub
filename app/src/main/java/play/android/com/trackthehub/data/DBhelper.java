@@ -25,7 +25,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 MyContract.RepoEntry.COLUMN_LANG+" TEXT,"+
                 MyContract.RepoEntry.COLUMN_FORKS+" TEXT,"+
                 MyContract.RepoEntry.COLUMN_STARS+" TEXT,"+
-                MyContract.RepoEntry.COLUMN_STODAY+" TEXT)";
+                MyContract.RepoEntry.COLUMN_STODAY+" TEXT,"+
+                MyContract.RepoEntry.COLUMN_USER+" TEXT NOT NULL)";
 
         sqLiteDatabase.execSQL(SQL_CREATE_REPO_TABLE);
 

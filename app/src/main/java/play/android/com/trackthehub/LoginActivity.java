@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     Utils.SetString(username+":token",token[0],getApplicationContext());
                     Utils.SetString("loggedin","true",getApplicationContext());
+                    Utils.SetString("username",username,getApplicationContext());
                     Intent loginIntent=new Intent(getApplicationContext(),HomeActivity.class);
                     startActivity(loginIntent);
                     finish();
