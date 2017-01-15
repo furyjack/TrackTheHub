@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class MyReposFragment extends Fragment {
 
     RecyclerView mRepoList;
     ArrayList<Repo> mlist;
+    ProgressBar pbar;
 
     public MyReposFragment() {
         // Required empty public constructor
@@ -33,6 +35,7 @@ public class MyReposFragment extends Fragment {
 
         View rootview= inflater.inflate(R.layout.fragment_my_repos, container, false);
         mRepoList=(RecyclerView)rootview.findViewById(R.id.rvRepoList);
+    //    pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
         mlist=new ArrayList<>();
         mlist.add(Utils.getdata());
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));

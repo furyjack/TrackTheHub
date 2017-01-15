@@ -24,9 +24,9 @@ public class Repo  {
     public String startoday;
 
 
-    public Boolean isBookMarked;
+    public String user;
 
-    public Repo(String title, String desc, String lang, String stars, String forks, String startoday, Boolean isBookMarked) {
+    public Repo(String title, String desc, String lang, String stars, String forks, String startoday, String user) {
        super();
 
         Title = title;
@@ -35,7 +35,7 @@ public class Repo  {
         this.stars = stars;
         this.forks = forks;
         this.startoday = startoday;
-        this.isBookMarked = isBookMarked;
+        this.user = user;
     }
 
     public Repo() {
