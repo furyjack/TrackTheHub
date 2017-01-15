@@ -117,8 +117,48 @@ public class MyProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+    public int delete(Uri uri, String s, String[] strings)
+    {
+
+        SQLiteDatabase db=mhelper.getWritableDatabase();
+        int code=sUriMatcher.match(uri);
+        int rdeleted;
+
+        switch (code)
+        {
+            case REPO:
+            {
+                if(s==null)
+                    s="1";
+                rdeleted= db.delete(MyContract.RepoEntry.TABLE_NAME,s,strings);
+                break;
+
+            }
+            case REPO_WITH_USER:
+            {
+
+                String username=uri.getPathSegments().get(1);
+                String[] ARGS={username};
+                if(s==null)
+                {
+                    s=sRepoSettingSelection;
+                    strings=ARGS;
+                }
+                rdeleted= db.delete(MyContract.RepoEntry.TABLE_NAME,s,strings);
+                break;
+
+            }
+            default:
+                throw new UnsupportedOperationException("Unkown uri:" +uri);
+
+
+
+
+        }
+
+        if(rdeleted!=0)
+        getContext().getContentResolver().notifyChange(uri,null);
+      return rdeleted;
     }
 
     @Override
@@ -126,6 +166,30 @@ public class MyProvider extends ContentProvider {
         return 0;
     }
 
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        final SQLiteDatabase db = mhelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case REPO_WITH_USER:
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (ContentValues value : values) {
 
-
+                        long _id = db.insert(MyContract.RepoEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            default:
+                return super.bulkInsert(uri, values);
+        }
+    }
 }

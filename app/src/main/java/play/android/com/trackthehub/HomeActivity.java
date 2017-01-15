@@ -1,6 +1,5 @@
 package play.android.com.trackthehub;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -20,7 +19,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.util.Utils;
 
 public class HomeActivity extends AppCompatActivity {
@@ -82,10 +80,8 @@ public class HomeActivity extends AppCompatActivity {
 
         mDrawerToggle.syncState();
         String username=Utils.getString("username","null",this);
-        ContentValues values=new ContentValues();
-        values.put(MyContract.RepoEntry.COLUMN_TITLE,"furyjack");
-        values.put(MyContract.RepoEntry.COLUMN_USER,username);
-        getContentResolver().insert(MyContract.buildrepowithuser(username),values);
+      //  getContentResolver().insert(MyContract.buildrepowithuser(username),values);
+       // getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
 
 
 
