@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
     ProgressBar pbar;
     public static  final int REPO_LOADER=0;
  RepoAdapter adapter;
+    TextView tvEmpty;
     public MyReposFragment() {
 
     }
@@ -46,12 +48,13 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
         mRepoList=(RecyclerView)rootview.findViewById(R.id.rvRepoList);
         pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
+        tvEmpty=(TextView)rootview.findViewById(R.id.tv_empty);
+    
 
        adapter=new RepoAdapter(null,pbar);
 //
        mRepoList.setAdapter(adapter);
+
 
 
 
@@ -81,8 +84,9 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-  
+
         adapter.swapCursor(data);
+
 
     }
 

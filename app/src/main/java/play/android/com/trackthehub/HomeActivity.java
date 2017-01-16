@@ -82,7 +82,8 @@ public class HomeActivity extends AppCompatActivity {
 
         mDrawerToggle.syncState();
         String username=Utils.getString("username","null",this);
-        getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
+       getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
+
         Intent i=new Intent(this,fetchService.class);
         i.putExtra("url","https://api.github.com/user/repos?affiliation=owner&oauth_token="+Utils.getString(username+":token","null",this));
         i.putExtra("code",1);
