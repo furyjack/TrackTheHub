@@ -63,9 +63,8 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
             urlConnection.disconnect();
             JSONObject topLevel = new JSONObject(builder.toString());
-            String token=topLevel.getString("token");
 
-            return token;
+            return topLevel.getString("token");
 
 
 

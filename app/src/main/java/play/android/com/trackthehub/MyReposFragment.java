@@ -1,31 +1,40 @@
 package play.android.com.trackthehub;
 
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import play.android.com.trackthehub.data.MyContract;
+import play.android.com.trackthehub.data.MyProvider;
+import play.android.com.trackthehub.data.RepoAdapter;
 import play.android.com.trackthehub.util.Repo;
 import play.android.com.trackthehub.util.Utils;
 
 
-public class MyReposFragment extends Fragment {
+public class MyReposFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     RecyclerView mRepoList;
     ArrayList<Repo> mlist;
     ProgressBar pbar;
-
+    public static  final int REPO_LOADER=0;
+ RepoAdapter adapter;
     public MyReposFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -35,66 +44,54 @@ public class MyReposFragment extends Fragment {
 
         View rootview= inflater.inflate(R.layout.fragment_my_repos, container, false);
         mRepoList=(RecyclerView)rootview.findViewById(R.id.rvRepoList);
-    //    pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
-        mlist=new ArrayList<>();
-        mlist.add(Utils.getdata());
+        pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRepoList.setAdapter(new ListAdapter());
 
+
+
+       adapter=new RepoAdapter(null,pbar);
+//
+       mRepoList.setAdapter(adapter);
 
 
 
         return  rootview;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(REPO_LOADER, null, this);
 
-    class ListViewHolder extends RecyclerView.ViewHolder {
-
-        TextView Title,desc,star,fork,starttoday,lang;
-
-
-
-        ListViewHolder(View itemView) {
-            super(itemView);
-            Title = (TextView) itemView.findViewById(R.id.tvTitle);
-            desc = (TextView) itemView.findViewById(R.id.tvDesc);
-            lang = (TextView) itemView.findViewById(R.id.tvLang);
-            star = (TextView) itemView.findViewById(R.id.tvstar);
-            fork = (TextView) itemView.findViewById(R.id.tvfork);
-            starttoday = (TextView) itemView.findViewById(R.id.tvTodays);
-        }
     }
 
-    class ListAdapter extends RecyclerView.Adapter<MyReposFragment.ListViewHolder> {
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String usename;
+        usename= Utils.getString("username","null",getContext());
+        String[]argument={usename};
+
+        Uri repoRetrieve=MyContract.buildrepowithuser(usename);
+        return new CursorLoader(getContext(),repoRetrieve,MyContract.RepoEntry.projection,MyProvider.sRepoSettingSelection,argument,null);
 
 
-
-
-        @Override
-        public MyReposFragment.ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            View v = inflater.inflate(R.layout.cardviewrepo, parent, false);
-
-            return new MyReposFragment.ListViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(MyReposFragment.ListViewHolder holder, int position) {
-
-            holder.Title.setText(mlist.get(0).Title);
-            holder.desc.setText(mlist.get(0).desc);
-            holder.lang.setText(mlist.get(0).Lang);
-            holder.star.setText(mlist.get(0).stars);
-            holder.fork.setText(mlist.get(0).forks);
-            holder.starttoday.setText(mlist.get(0).startoday+ " today");
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 10;
-        }
     }
+
+
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+  
+        adapter.swapCursor(data);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
+
+    }
+
 
 
 

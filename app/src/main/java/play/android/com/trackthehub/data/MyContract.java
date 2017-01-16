@@ -31,7 +31,7 @@ public class MyContract {
         public static final String COLUMN_STODAY="STODAY";
         public static final String COLUMN_USER="USER";
 
-        public static final String[] projection={COLUMN_TITLE,COLUMN_DESC,COLUMN_LANG,COLUMN_STARS,COLUMN_FORKS,COLUMN_STODAY,COLUMN_USER};
+        public static final String[] projection={_ID,COLUMN_TITLE,COLUMN_DESC,COLUMN_LANG,COLUMN_STARS,COLUMN_FORKS,COLUMN_STODAY,COLUMN_USER};
 
 
     }

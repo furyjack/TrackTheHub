@@ -18,7 +18,7 @@ public class MyProvider extends ContentProvider {
     private static final int REPO_WITH_USER =102 ;
     static  final int REPO=101;
     private DBhelper mhelper;
-    private static final String sRepoSettingSelection =
+    public static final String sRepoSettingSelection =
             MyContract.RepoEntry.TABLE_NAME+
                     "." + MyContract.RepoEntry.COLUMN_USER + " = ? ";
 
@@ -53,7 +53,7 @@ public class MyProvider extends ContentProvider {
             case REPO_WITH_USER:
             {
                 SQLiteDatabase rdb=mhelper.getReadableDatabase();
-                String user=uri.getPathSegments().get(2);
+                String user=uri.getPathSegments().get(1);
                 String[] ARGS={user};
                  retCursor=rdb.query(TABLE_NAME,MyContract.RepoEntry.projection,sRepoSettingSelection,ARGS,null,null,null);
                break;
