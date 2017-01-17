@@ -112,6 +112,12 @@ public class NavigationFragment extends Fragment {
         public void onBindViewHolder(ListViewHolder holder, int position) {
 
             holder.label.setText(list.get(position));
+            holder.label.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getContext(),NewsFeedActivity.class));
+                }
+            });
 
         }
 
