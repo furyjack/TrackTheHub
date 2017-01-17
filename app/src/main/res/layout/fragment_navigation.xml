@@ -20,6 +20,7 @@
                 android:layout_marginTop="20dp"
                 android:src="@mipmap/ic_launcher"
                 android:id="@+id/img_pr"
+
                 />
 
 

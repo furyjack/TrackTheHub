@@ -18,10 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity" />
 
-        <service android:name=".network.fetchService"
-            android:exported="false"/>
+        <service
+            android:name=".network.fetchService"
+            android:exported="false" />
 
         <provider
             android:name=".data.MyProvider"

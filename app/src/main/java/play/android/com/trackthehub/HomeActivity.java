@@ -19,7 +19,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.network.fetchService;
 import play.android.com.trackthehub.util.Utils;
 
@@ -32,12 +31,15 @@ public class HomeActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
 
+
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
 
     }
+
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -77,18 +79,31 @@ public class HomeActivity extends AppCompatActivity {
         };
 
 
+
+
+
         mDrawerToggle.setDrawerIndicatorEnabled(true);
 
 
         mDrawerToggle.syncState();
         String username=Utils.getString("username","null",this);
-       getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
+        if(Utils.getString("user_fetched","false",this).equals("false"))
+        {
+            Intent i=new Intent(this,fetchService.class);
+            i.putExtra("code",2);
+            i.putExtra("user",username);
+            i.putExtra("url","https://api.github.com/user?oauth_token="+Utils.getString(username+":token","null",this));
+            startService(i);
 
-        Intent i=new Intent(this,fetchService.class);
-        i.putExtra("url","https://api.github.com/user/repos?affiliation=owner&oauth_token="+Utils.getString(username+":token","null",this));
-        i.putExtra("code",1);
-        i.putExtra("user",username);
-        startService(i);
+
+
+        }
+
+
+
+
+
+
 
 
 
@@ -141,6 +156,7 @@ public class HomeActivity extends AppCompatActivity {
         if(item.getItemId()==R.id.mLogout) {
 
             Utils.SetString("loggedin","false",this);
+            Utils.SetString("user_fetched","false",this);
             startActivity(new Intent(this,LoginActivity.class));
             finish();
             return true;
