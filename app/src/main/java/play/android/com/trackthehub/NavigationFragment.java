@@ -75,7 +75,7 @@ public class NavigationFragment extends Fragment {
 
             }
         };
-        IntentFilter filter = new IntentFilter("play.android.com.trackthehub");
+        IntentFilter filter = new IntentFilter("play.android.com.trackthehub.dp");
         getContext().registerReceiver(mreciever,filter);
 
         return rootview;

@@ -28,7 +28,8 @@
             android:name=".data.MyProvider"
             android:authorities="play.android.com.trackthehub" />
 
-        <activity android:name=".NewsFeedActivity"></activity>
+        <activity android:name=".NewsFeedActivity" />
+        <activity android:name=".TrendingActivity"></activity>
     </application>
 
 </manifest>

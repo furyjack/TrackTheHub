@@ -141,5 +141,33 @@ return list;
     }
 
 
+    public static ArrayList<Issues> getissueslist(String json) throws JSONException {
 
+        JSONArray array=new JSONArray(json);
+        ArrayList<Issues>list=new ArrayList<>();
+        for(int i=0;i<array.length();i++)
+        {
+           JSONObject OBJ=array.getJSONObject(i);
+            String type=OBJ.getString("type");
+            if(type.equals("IssuesEvent"))
+            {
+
+
+                JSONObject repo=OBJ.getJSONObject("repo");
+                String reponame=repo.getString("name");
+                String created=OBJ.getString("created_at").substring(0,10);
+                String desc=OBJ.getJSONObject("payload").getJSONObject("issue").getString("title");
+                String number=OBJ.getJSONObject("payload").getJSONObject("issue").getString("number");
+                String user=OBJ.getJSONObject("payload").getJSONObject("issue").getJSONObject("user").getString("login");
+
+               list.add(new Issues(reponame,desc,number,created,user));
+            }
+
+
+
+        }
+
+          return list;
+
+    }
 }

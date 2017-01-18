@@ -83,6 +83,20 @@ public class fetchService extends IntentService{
 
                  }
 
+                 case 3:
+                 {
+
+                     String jsonstring=response.toString();
+                     Intent i=new Intent();
+                     i.putExtra("jsoneventdata",jsonstring);
+                     i.setAction("play.android.com.trackthehub.issues");
+                     sendBroadcast(i);
+
+
+
+
+                 }
+
 
 
 
@@ -124,7 +138,7 @@ public class fetchService extends IntentService{
 
                             Intent i=new Intent();
                             i.putExtra("dp_url",avatar_url);
-                            i.setAction("play.android.com.trackthehub");
+                            i.setAction("play.android.com.trackthehub.dp");
                             sendBroadcast(i);
 
                         } catch (JSONException e) {
@@ -156,7 +170,7 @@ public class fetchService extends IntentService{
 
 
 
-if(code==1)
+if(code==1 || code==3)
 mQueue.add(requestA);
         else
     mQueue.add(requesto);
