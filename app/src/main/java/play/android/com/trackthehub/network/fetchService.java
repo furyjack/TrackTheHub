@@ -101,6 +101,18 @@ public class fetchService extends IntentService{
 
                     }
 
+                    case 5: {
+
+                        String jsonstring = response.toString();
+                        Intent i = new Intent();
+                        i.putExtra("data", jsonstring);
+                        i.setAction("play.android.com.trackthehub.newsfeed");
+                        sendBroadcast(i);
+
+
+                    }
+
+
 
                 }
 
@@ -163,7 +175,7 @@ public class fetchService extends IntentService{
         });
 
 
-        if (code == 1 || code == 3 || code == 4) {
+        if (code == 1 || code == 3 || code == 4 ||code==5) {
 
 
             mQueue.add(requestA);

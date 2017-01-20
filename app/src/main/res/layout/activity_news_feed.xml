@@ -36,6 +36,7 @@
                     android:textSize="30sp"
                     android:textColor="#ffff"
                     android:textStyle="bold"
+                    android:id="@+id/title"
                     />
 
             </android.support.v7.widget.Toolbar>

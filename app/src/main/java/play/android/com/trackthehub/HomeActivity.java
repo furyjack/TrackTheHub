@@ -25,7 +25,7 @@ import play.android.com.trackthehub.util.Utils;
 public class HomeActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
-    int[] tabIcons = {R.drawable.ic_repo, R.drawable.ic_pullrequest, R.drawable.ic_issues};
+    int[] tabIcons = {R.drawable.ic_repo,R.drawable.ic_issues};
     TabLayout tabLayout;
     ViewPager viewPager;
     DrawerLayout mDrawerLayout;
@@ -34,8 +34,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
 
     }
 
@@ -44,7 +44,6 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new MyReposFragment(), "repositories");
-        adapter.addFragment(new emptyfrag(), "pull requests");
         adapter.addFragment(new myissuefragment(), "issues");
         viewPager.setAdapter(adapter);
     }

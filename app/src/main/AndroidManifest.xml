@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="play.android.com.trackthehub">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".Myapplication"
@@ -31,7 +33,9 @@
         <activity android:name=".NewsFeedActivity" />
         <activity android:name=".TimeLineActivity"></activity>
 
-        
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+          />
+
     </application>
 
 </manifest>

@@ -32,7 +32,7 @@ public class TimeLineActivity extends AppCompatActivity {
     ArrayList<Event> mlist;
     BroadcastReceiver mreciever;
     Radater radater;
-
+    TextView TVTITLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,8 @@ public class TimeLineActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setDistanceToTriggerSync(200);
+        TVTITLE=(TextView)findViewById(R.id.title) ;
+        TVTITLE.setText("Timeline");
 
         mRecyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         mlist=new ArrayList<>();
@@ -115,7 +117,7 @@ public class TimeLineActivity extends AppCompatActivity {
 
         public viewholder(View itemView) {
             super(itemView);
-            tv=(TextView)itemView.findViewById(android.R.id.text1);
+            tv=(TextView)itemView.findViewById(R.id.tvRepo);
 
         }
     }
@@ -133,7 +135,7 @@ public class TimeLineActivity extends AppCompatActivity {
         @Override
         public viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater=getLayoutInflater();
-            View root=inflater.inflate(android.R.layout.simple_list_item_1,parent,false);
+            View root=inflater.inflate(R.layout.cardviewissues,parent,false);
             return  new viewholder(root);
         }
 

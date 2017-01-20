@@ -5,7 +5,7 @@ package play.android.com.trackthehub.util;
 public class Event {
 
 
-    String user;
+  public   String user;
     String branch;
     String repo;
     String commit;

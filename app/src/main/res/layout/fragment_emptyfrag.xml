@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="play.android.com.trackthehub.emptyfrag">
 
 <ImageView
@@ -24,5 +25,19 @@
 
 
      />
+
+
+ <com.google.android.gms.ads.AdView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_gravity="bottom"
+     ads:adSize="BANNER"
+     ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+android:id="@+id/adview"
+
+     >
+
+
+ </com.google.android.gms.ads.AdView>
 
 </FrameLayout>
