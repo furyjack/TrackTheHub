@@ -42,6 +42,7 @@ public class NavigationFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,13 +110,24 @@ public class NavigationFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ListViewHolder holder, int position) {
+        public void onBindViewHolder(ListViewHolder holder, final int position) {
 
             holder.label.setText(list.get(position));
             holder.label.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getContext(),NewsFeedActivity.class));
+                    switch (position)
+                    {
+                        case 0:
+                            startActivity(new Intent(getContext(),NewsFeedActivity.class));
+                            break;
+                        case 1:
+                        {
+                            startActivity(new Intent(getContext(),TimeLineActivity.class));
+                            break;
+                        }
+
+                        }
                 }
             });
 

@@ -170,4 +170,70 @@ return list;
           return list;
 
     }
+
+    public static ArrayList<Event> geteventlist(String data) throws JSONException {
+
+
+        JSONArray array=new JSONArray(data);
+        ArrayList<Event>list=new ArrayList<>();
+        for(int i=0;i<array.length();i++)
+        {
+            JSONObject obj=array.getJSONObject(i);
+            String type=obj.getString("type");
+            String user=obj.getJSONObject("actor").getString("login");
+            String repo=obj.getJSONObject("repo").getString("name");
+
+            Event event=new Event(user,repo,type);
+            switch (type)
+            {
+                case "PushEvent":
+                {
+                   event.setBranch(obj.getJSONObject("payload").getString("ref").split("/")[2]);
+                   event.setCommit(obj.getJSONObject("payload").getJSONArray("commits").getJSONObject(0).getString("sha").substring(0,7));
+                    event.setCommit(obj.getJSONObject("payload").getJSONArray("commits").getJSONObject(0).getString("message"));
+
+
+
+                 break;
+                }
+
+                case "CreateEvent":
+                {
+                    if(obj.getJSONObject("payload").getString("ref_type").equals("repository"))
+                    {
+
+                        event.setBranch(obj.getJSONObject("payload").getString("master_branch"));
+
+
+                    }
+
+
+
+                    break;
+                }
+
+                case "ForkEvent":
+                {
+
+
+                    event.setBranch(obj.getJSONObject("payload").getJSONObject("forkee").getString("full_name"));
+
+
+                    break;
+                }
+
+
+
+
+            }
+
+list.add(event);
+
+
+
+        }
+
+
+        return list;
+    }
 }

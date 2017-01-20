@@ -42,114 +42,64 @@ public class fetchService extends IntentService{
     @Override
     protected void onHandleIntent(final Intent intent) {
 
-        mQueue= Volley.newRequestQueue(getApplicationContext());
-        URL=intent.getStringExtra("url");
-        code=intent.getIntExtra("code",-1);
-        user=intent.getStringExtra("user");
+        mQueue = Volley.newRequestQueue(getApplicationContext());
+
+        URL = intent.getStringExtra("url");
+        code = intent.getIntExtra("code", -1);
+        user = intent.getStringExtra("user");
 
 
-        JsonArrayRequest requestA=new JsonArrayRequest(Request.Method.GET, URL, new Response.Listener<JSONArray>() {
+        JsonArrayRequest requestA = new JsonArrayRequest(Request.Method.GET, URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
-             switch (code)
-             {
-                 case 1:  //get user repo
-                 {
-
-                     ArrayList<Repo>mlist= Utils.getRepoListFromJson(response,user);
-                     ContentValues[]values=new ContentValues[mlist.size()];
-                     int count=0;
-                     for(Repo x:mlist)
-                     {
-                         ContentValues v=new ContentValues();
-                         v.put(MyContract.RepoEntry.COLUMN_TITLE,x.Title);
-                         v.put(MyContract.RepoEntry.COLUMN_DESC,x.desc);
-                         v.put(MyContract.RepoEntry.COLUMN_LANG,x.Lang);
-                         v.put(MyContract.RepoEntry.COLUMN_STARS,x.stars);
-                         v.put(MyContract.RepoEntry.COLUMN_FORKS,x.forks);
-                         v.put(MyContract.RepoEntry.COLUMN_STODAY,x.startoday);
-                         v.put(MyContract.RepoEntry.COLUMN_USER,x.user);
-                         values[count]=v;
-
-
-
-                         count++;
-                     }
-                     getContentResolver().bulkInsert(MyContract.buildrepowithuser(user),values);
-
-
-
-
-                 }
-
-                 case 3:
-                 {
-
-                     String jsonstring=response.toString();
-                     Intent i=new Intent();
-                     i.putExtra("jsoneventdata",jsonstring);
-                     i.setAction("play.android.com.trackthehub.issues");
-                     sendBroadcast(i);
-
-
-
-
-                 }
-
-
-
-
-
-
-             }
-
-
-               //sendBroadcast();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(fetchService.this, "error occured", Toast.LENGTH_SHORT).show();
-                Log.e("error", "onErrorResponse: "+error.getMessage() );
-
-            }
-        });
-
-
-        JsonObjectRequest requesto=new JsonObjectRequest(Request.Method.GET, URL, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                switch (code)
-                {
-
-
-                    case 2:
+                switch (code) {
+                    case 1:  //get user repo
                     {
 
-                        String avatar_url="null";
-                        try {
+                        ArrayList<Repo> mlist = Utils.getRepoListFromJson(response, user);
+                        ContentValues[] values = new ContentValues[mlist.size()];
+                        int count = 0;
+                        for (Repo x : mlist) {
+                            ContentValues v = new ContentValues();
+                            v.put(MyContract.RepoEntry.COLUMN_TITLE, x.Title);
+                            v.put(MyContract.RepoEntry.COLUMN_DESC, x.desc);
+                            v.put(MyContract.RepoEntry.COLUMN_LANG, x.Lang);
+                            v.put(MyContract.RepoEntry.COLUMN_STARS, x.stars);
+                            v.put(MyContract.RepoEntry.COLUMN_FORKS, x.forks);
+                            v.put(MyContract.RepoEntry.COLUMN_STODAY, x.startoday);
+                            v.put(MyContract.RepoEntry.COLUMN_USER, x.user);
+                            values[count] = v;
 
-                            avatar_url=response.getString("avatar_url");
-                            Utils.SetString("dp_url",avatar_url,getApplicationContext());
-                            Utils.SetString("user_fetched","true",getApplicationContext());
 
-                            Intent i=new Intent();
-                            i.putExtra("dp_url",avatar_url);
-                            i.setAction("play.android.com.trackthehub.dp");
-                            sendBroadcast(i);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            count++;
                         }
-
+                        getContentResolver().bulkInsert(MyContract.buildrepowithuser(user), values);
 
 
                     }
 
+                    case 3: {
 
+                        String jsonstring = response.toString();
+                        Intent i = new Intent();
+                        i.putExtra("jsoneventdata", jsonstring);
+                        i.setAction("play.android.com.trackthehub.issues");
+                        sendBroadcast(i);
+
+
+                    }
+
+                    case 4: {
+
+                        String jsonstring = response.toString();
+                        Intent i = new Intent();
+                        i.putExtra("data", jsonstring);
+                        i.setAction("play.android.com.trackthehub.timeline");
+                        sendBroadcast(i);
+
+
+                    }
 
 
                 }
@@ -162,18 +112,63 @@ public class fetchService extends IntentService{
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(fetchService.this, "error occured", Toast.LENGTH_SHORT).show();
-                Log.e("error", "onErrorResponse: "+error.getMessage() );
+                Log.e("error", "onErrorResponse: " + error.getMessage());
 
             }
         });
 
 
+        JsonObjectRequest requesto = new JsonObjectRequest(Request.Method.GET, URL, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                switch (code) {
 
 
-if(code==1 || code==3)
-mQueue.add(requestA);
-        else
-    mQueue.add(requesto);
+                    case 2: {
+
+                        String avatar_url = "null";
+                        try {
+
+                            avatar_url = response.getString("avatar_url");
+                            Utils.SetString("dp_url", avatar_url, getApplicationContext());
+                            Utils.SetString("user_fetched", "true", getApplicationContext());
+
+                            Intent i = new Intent();
+                            i.putExtra("dp_url", avatar_url);
+                            i.setAction("play.android.com.trackthehub.dp");
+                            sendBroadcast(i);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+                }
+
+
+                //sendBroadcast();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(fetchService.this, "error occured", Toast.LENGTH_SHORT).show();
+                Log.e("error", "onErrorResponse: " + error.getMessage());
+
+            }
+        });
+
+
+        if (code == 1 || code == 3 || code == 4) {
+
+
+            mQueue.add(requestA);
+        } else
+            mQueue.add(requesto);
 
     }
 }

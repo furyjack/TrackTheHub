@@ -45,8 +45,9 @@ public class NewsFeedActivity extends AppCompatActivity {
             mlist.add("not loaded");
         }
 
-      class viewholder extends RecyclerView.ViewHolder
-      {
+        class viewholder extends RecyclerView.ViewHolder
+        {
+
           TextView tv;
 
           public viewholder(View itemView) {

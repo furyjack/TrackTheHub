@@ -29,7 +29,9 @@
             android:authorities="play.android.com.trackthehub" />
 
         <activity android:name=".NewsFeedActivity" />
-        <activity android:name=".TrendingActivity"></activity>
+        <activity android:name=".TimeLineActivity"></activity>
+
+        
     </application>
 
 </manifest>

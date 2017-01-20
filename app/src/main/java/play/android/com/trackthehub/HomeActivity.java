@@ -68,13 +68,15 @@ public class HomeActivity extends AppCompatActivity {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
+
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
+    // creates call to onPrepareOptionsMenu()
             }
         };
 
@@ -86,6 +88,24 @@ public class HomeActivity extends AppCompatActivity {
 
 
         mDrawerToggle.syncState();
+
+
+viewPager.setOffscreenPageLimit(3);
+
+
+
+
+
+
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         String username=Utils.getString("username","null",this);
         if(Utils.getString("user_fetched","false",this).equals("false"))
         {
@@ -98,18 +118,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
