@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnlogin.setVisibility(View.VISIBLE);
 
                 if(token[0] ==null) {
-                    Toast.makeText(getApplicationContext(), "something went wrong please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.errorlogin, Toast.LENGTH_SHORT).show();
                     pbar.setVisibility(View.INVISIBLE);
                     btnlogin.setVisibility(View.VISIBLE);
                 }

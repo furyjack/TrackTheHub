@@ -3,6 +3,7 @@ package play.android.com.trackthehub.util;
 
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +20,7 @@ import java.net.URL;
 
 public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     onPostExcecuteListner mlistener;
-
+    public static final String TAG="error.trackthehub";
     public void setPostListener(onPostExcecuteListner l)
     {
         mlistener=l;
@@ -72,10 +73,13 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Log.e(TAG, "doInBackground: Malformedurl" );
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e(TAG, "doInBackground: Ioexception" );
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e(TAG, "doInBackground: jsonexception" );
         }
 
         return null;

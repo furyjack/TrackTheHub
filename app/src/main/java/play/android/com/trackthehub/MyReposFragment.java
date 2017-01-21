@@ -51,7 +51,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
         tvEmpty=(TextView)rootview.findViewById(R.id.tv_empty);
     
 
-       adapter=new RepoAdapter(null,pbar);
+       adapter=new RepoAdapter(null,pbar,getContext());
 //
        mRepoList.setAdapter(adapter);
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import play.android.com.trackthehub.util.Utils;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
-
+    private static final String TAG ="error.trackthehub" ;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -40,6 +41,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_news_feed);
 
         mToolbar= (Toolbar) findViewById(R.id.toolbar);
@@ -61,6 +63,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                     mlist.addAll(Utils.geteventlist(data));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e(TAG, "onReceive: error in parsing json events");
                 }
                 radater.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -150,7 +153,7 @@ public class NewsFeedActivity extends AppCompatActivity {
             {
                 case "PushEvent":
                 {
-                    holder.Desc.setText(String.format("Pushed to %s at %s",event.getBranch(),event.repo));
+                    holder.Desc.setText(String.format(getString(R.string.timelinebranch),event.getBranch(),event.repo));
                     holder.event.setText(String.format("%s %s",event.getCommit(),event.getCommitMessage()));
 
                     break;
@@ -159,7 +162,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                 case "CreateEvent":
                 {
                     holder.Desc.setText(R.string.descCreateRepo);
-                    holder.event.setText(String.format("New repository is at %s",event.repo));
+                    holder.event.setText(String.format(getString(R.string.timelinerepo),event.repo));
 
                     break;
                 }
@@ -167,8 +170,8 @@ public class NewsFeedActivity extends AppCompatActivity {
                 case "ForkEvent":
                 {
 
-                    holder.Desc.setText(String.format("Forked %s",event.repo));
-                    holder.event.setText(String.format("Forked repository is at %s",event.getBranch()));
+                    holder.Desc.setText(String.format(getString(R.string.timelineforked),event.repo));
+                    holder.event.setText(String.format(getString(R.string.timelineforkedevent),event.getBranch()));
 
                     break;
                 }

@@ -1,5 +1,6 @@
 package play.android.com.trackthehub.data;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ public class RepoAdapter extends RecyclerViewCursorAdapter<RepoAdapter.ListViewH
 
     boolean firstloaded=false;
     ProgressBar pbar;
+    Context c;
 
-    public RepoAdapter(Cursor cursor, ProgressBar pbar) {
+    public RepoAdapter(Cursor cursor, ProgressBar pbar,Context context) {
         super(cursor);
         this.pbar=pbar;
+        c=context;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class RepoAdapter extends RecyclerViewCursorAdapter<RepoAdapter.ListViewH
         holder.star.setText(star);
         holder.lang.setText(lang);
         holder.fork.setText(fork);
-        holder.starttoday.setText(String.format("%s stars today", stoday));
+        holder.starttoday.setText(String.format(c.getString(R.string.starstodayrepo), stoday));
         holder.imstar.setImageResource(R.drawable.ic_star);
 
     }

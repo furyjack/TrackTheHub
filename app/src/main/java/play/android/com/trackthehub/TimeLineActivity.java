@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import play.android.com.trackthehub.util.Utils;
 public class TimeLineActivity extends AppCompatActivity {
 
 
+    private static final String TAG ="error.trackthehub" ;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -46,7 +48,7 @@ public class TimeLineActivity extends AppCompatActivity {
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setDistanceToTriggerSync(200);
         TVTITLE=(TextView)findViewById(R.id.title) ;
-        TVTITLE.setText("Timeline");
+        TVTITLE.setText(R.string.timeline);
 
         mRecyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         mlist=new ArrayList<>();
@@ -63,6 +65,7 @@ public class TimeLineActivity extends AppCompatActivity {
                     mlist.addAll(Utils.geteventlist(data));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e(TAG, "onReceive: error in parsing json events");
                 }
                 radater.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -90,7 +93,7 @@ public class TimeLineActivity extends AppCompatActivity {
                 Intent i=new Intent(TimeLineActivity.this,fetchService.class);
                 i.putExtra("code",4);
                 i.putExtra("user",username);
-                i.putExtra("url","https://api.github.com/events/public" +"?oauth_token="+Utils.getString(username+":token","null",TimeLineActivity.this));
+                i.putExtra("url","https://api.github.com/events/public");
                 TimeLineActivity.this.startService(i);
 
 
@@ -154,7 +157,7 @@ public class TimeLineActivity extends AppCompatActivity {
             {
                 case "PushEvent":
                 {
-                    holder.Desc.setText(String.format("Pushed to %s at %s",event.getBranch(),event.repo));
+                    holder.Desc.setText(String.format(getString(R.string.timelinebranch),event.getBranch(),event.repo));
                     holder.event.setText(String.format("%s %s",event.getCommit(),event.getCommitMessage()));
 
                     break;
@@ -163,7 +166,7 @@ public class TimeLineActivity extends AppCompatActivity {
                 case "CreateEvent":
                 {
                     holder.Desc.setText(R.string.descCreateRepo);
-                    holder.event.setText(String.format("New repository is at %s",event.repo));
+                    holder.event.setText(String.format(getString(R.string.timelinerepo),event.repo));
 
                     break;
                 }
@@ -171,8 +174,8 @@ public class TimeLineActivity extends AppCompatActivity {
                 case "ForkEvent":
                 {
 
-                    holder.Desc.setText(String.format("Forked %s",event.repo));
-                    holder.event.setText(String.format("Forked repository is at %s",event.getBranch()));
+                    holder.Desc.setText(String.format(getString(R.string.timelineforked),event.repo));
+                    holder.event.setText(String.format(getString(R.string.timelineforkedevent),event.getBranch()));
 
                     break;
                 }

@@ -54,8 +54,8 @@ public class NavigationFragment extends Fragment {
         String user= Utils.getString("username","user",getContext());
         Tvusername.setText(user);
         mlist = new ArrayList<>();
-        mlist.add("News feed");
-        mlist.add("TimeLine");
+        mlist.add(getString(R.string.newsfeed));
+        mlist.add(getString(R.string.timeline));
         String fetched=Utils.getString("user_fetched","false",getContext());
         if(fetched.equals("true"))
         {

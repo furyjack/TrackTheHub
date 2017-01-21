@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import play.android.com.trackthehub.R;
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.util.Repo;
 import play.android.com.trackthehub.util.Utils;
@@ -32,6 +33,7 @@ public class fetchService extends IntentService{
     String user;
     RequestQueue mQueue;
     int code;
+    public static final String TAG="error.trackthehub";
 
     public fetchService() {
         super("fetchService");
@@ -123,8 +125,8 @@ public class fetchService extends IntentService{
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(fetchService.this, "error occured", Toast.LENGTH_SHORT).show();
-                Log.e("error", "onErrorResponse: " + error.getMessage());
+                Toast.makeText(fetchService.this, R.string.itentserviceerror, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onErrorResponse: " + error.getMessage());
 
             }
         });
@@ -169,7 +171,7 @@ public class fetchService extends IntentService{
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(fetchService.this, "error occured", Toast.LENGTH_SHORT).show();
-                Log.e("error", "onErrorResponse: " + error.getMessage());
+                Log.e(TAG, "onErrorResponse: " + error.getMessage());
 
             }
         });

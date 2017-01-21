@@ -1,6 +1,7 @@
 package play.android.com.trackthehub.data;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import play.android.com.trackthehub.util.Issues;
 public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHolder>{
 
     ArrayList<Issues>mlist;
+    Context C;
 
-    public IssueAdapter(ArrayList<Issues> mlist) {
+    public IssueAdapter(ArrayList<Issues> mlist,Context context) {
         this.mlist = mlist;
+        C=context;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
         String number=mlist.get(position).number;
         String user=mlist.get(position).user;
         String date=mlist.get(position).date;
-        String event=String.format("%s# opened on %s by %s",number,date,user);
+        String event=String.format(C.getString(R.string.issueopen),number,date,user);
         holder.event.setText(event);
 
     }

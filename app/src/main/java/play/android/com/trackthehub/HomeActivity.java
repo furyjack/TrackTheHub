@@ -43,8 +43,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MyReposFragment(), "repositories");
-        adapter.addFragment(new myissuefragment(), "issues");
+        adapter.addFragment(new MyReposFragment(), getString(R.string.repositories));
+        adapter.addFragment(new myissuefragment(), getString(R.string.issues));
         viewPager.setAdapter(adapter);
     }
 

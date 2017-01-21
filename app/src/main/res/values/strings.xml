@@ -12,4 +12,19 @@
     <string name="drawer_close">close</string>
     <string name="placeholderNameNavigation">Welcome, User</string>
     <string name="descCreateRepo">Created a repository</string>
+    <string name="issueopen" formatted="false">%s opened on %s by %s</string>
+    <string name="starstodayrepo" formatted="false">%s stars today</string>
+    <string name="repositories">repositories</string>
+    <string name="issues">issues</string>
+    <string name="errorlogin">something went wrong please try again</string>
+    <string name="itentserviceerror">error occurred</string>
+    <string name="timelinebranch" formatted="false">Pushed to %s at %s</string>
+    <string name="timelinerepo" formatted="false">New repository is at %s</string>
+    <string name="timelineforked" formatted="false">Forked %s</string>
+    <string name="timelineforkedevent" formatted="false">Forked repository is at %s</string>
+    <string name="timeline">Timeline</string>
+    <string name="news_feed">News Feed</string>
+    <string name="no_data">No data</string>
+    <string name="logout">Logout</string>
+    <string name="newsfeed">News feed</string>
 </resources>
