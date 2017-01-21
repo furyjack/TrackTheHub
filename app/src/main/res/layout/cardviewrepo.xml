@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="3dp"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         app:cardCornerRadius="10dp"
         tools:targetApi="lollipop">
 
      <RelativeLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         android:padding="16dp"
+         android:padding="10dp"
          >
          <LinearLayout
              android:layout_width="match_parent"
@@ -40,7 +40,7 @@
              android:textColor="#000000"
              />
 
-             <CheckBox
+             <ImageView
                  android:layout_width="0dp"
                  android:layout_height="wrap_content"
                  android:layout_weight="10"
@@ -51,8 +51,8 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_below="@id/llTitle"
-             android:padding="8dp"
-             android:textSize="20sp"
+            android:layout_marginTop="8dp"
+             android:textSize="16sp"
              tools:text="Its a wonderfull app:0"
              android:textStyle="italic"
              android:id="@+id/tvDesc"
@@ -64,12 +64,13 @@
              android:orientation="horizontal"
              android:layout_below="@id/tvDesc"
              android:gravity="start"
+             android:layout_marginTop="2dp"
              >
 
              <TextView
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:textSize="20sp"
+                 android:textSize="16sp"
 
                  android:id="@+id/tvLang"
                  tools:text="Java"
@@ -80,7 +81,7 @@
              <TextView
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:textSize="20sp"
+                 android:textSize="16sp"
 
                  android:id="@+id/tvstar"
                  tools:text="301"
@@ -91,7 +92,7 @@
              <TextView
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:textSize="20sp"
+                 android:textSize="16sp"
 
                  android:id="@+id/tvfork"
                  tools:text="19"
@@ -102,7 +103,8 @@
              <TextView
                  android:layout_width="0dp"
                  android:layout_height="wrap_content"
-                 android:textSize="20sp"
+                 android:textSize="16sp"
+
                  tools:text="19 today"
                  android:gravity="end"
                  android:layout_weight="1"

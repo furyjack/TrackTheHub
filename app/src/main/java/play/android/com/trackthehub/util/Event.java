@@ -7,7 +7,7 @@ public class Event {
 
   public   String user;
     String branch;
-    String repo;
+   public String repo;
     String commit;
    public String type;
     String commitMessage;

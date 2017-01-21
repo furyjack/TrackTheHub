@@ -60,7 +60,7 @@ public class NavigationFragment extends Fragment {
         if(fetched.equals("true"))
         {
             String av_url=Utils.getString("dp_url","null",getContext());
-          Picasso.with(getContext()).load(av_url).into(ImDp);
+            Picasso.with(getContext()).load(av_url).into(ImDp);
 
         }
         rvList.setAdapter(new ListAdapter(mlist));

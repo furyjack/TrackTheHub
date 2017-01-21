@@ -52,7 +52,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         radater=new NewsFeedActivity.Radater(mlist);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(radater);
-
+        mSwipeRefreshLayout.setRefreshing(true);
         mreciever=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -111,11 +111,15 @@ public class NewsFeedActivity extends AppCompatActivity {
     class viewholder extends RecyclerView.ViewHolder
     {
 
-        TextView tv;
+        TextView Name,Desc,event;
+
 
         public viewholder(View itemView) {
             super(itemView);
-            tv=(TextView)itemView.findViewById(R.id.tvRepo);
+            Name=(TextView)itemView.findViewById(R.id.tvRepo);
+            Desc=(TextView)itemView.findViewById(R.id.tvDesc);
+            event=(TextView)itemView.findViewById(R.id.tvevent);
+
 
         }
     }
@@ -140,7 +144,37 @@ public class NewsFeedActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(viewholder holder, int position) {
 
-            holder.tv.setText(mlist.get(position).user);
+            Event event=mlist.get(position);
+            holder.Name.setText(event.user);
+            switch(event.type)
+            {
+                case "PushEvent":
+                {
+                    holder.Desc.setText(String.format("Pushed to %s at %s",event.getBranch(),event.repo));
+                    holder.event.setText(String.format("%s %s",event.getCommit(),event.getCommitMessage()));
+
+                    break;
+                }
+
+                case "CreateEvent":
+                {
+                    holder.Desc.setText(R.string.descCreateRepo);
+                    holder.event.setText(String.format("New repository is at %s",event.repo));
+
+                    break;
+                }
+
+                case "ForkEvent":
+                {
+
+                    holder.Desc.setText(String.format("Forked %s",event.repo));
+                    holder.event.setText(String.format("Forked repository is at %s",event.getBranch()));
+
+                    break;
+                }
+
+
+            }
 
         }
 

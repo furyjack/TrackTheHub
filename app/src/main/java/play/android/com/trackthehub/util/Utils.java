@@ -190,9 +190,9 @@ return list;
                 {
                    event.setBranch(obj.getJSONObject("payload").getString("ref").split("/")[2]);
                    event.setCommit(obj.getJSONObject("payload").getJSONArray("commits").getJSONObject(0).getString("sha").substring(0,7));
-                    event.setCommit(obj.getJSONObject("payload").getJSONArray("commits").getJSONObject(0).getString("message"));
+                    event.setCommitMessage(obj.getJSONObject("payload").getJSONArray("commits").getJSONObject(0).getString("message"));
 
-
+                    list.add(event);
 
                  break;
                 }
@@ -204,7 +204,7 @@ return list;
 
                         event.setBranch(obj.getJSONObject("payload").getString("master_branch"));
 
-
+                        list.add(event);
                     }
 
 
@@ -217,7 +217,7 @@ return list;
 
 
                     event.setBranch(obj.getJSONObject("payload").getJSONObject("forkee").getString("full_name"));
-
+                    list.add(event);
 
                     break;
                 }
@@ -227,7 +227,7 @@ return list;
 
             }
 
-list.add(event);
+
 
 
 

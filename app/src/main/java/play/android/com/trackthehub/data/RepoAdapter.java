@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -50,13 +51,15 @@ public class RepoAdapter extends RecyclerViewCursorAdapter<RepoAdapter.ListViewH
         holder.star.setText(star);
         holder.lang.setText(lang);
         holder.fork.setText(fork);
-        holder.starttoday.setText(String.format("%s today", stoday));
+        holder.starttoday.setText(String.format("%s stars today", stoday));
+        holder.imstar.setImageResource(R.drawable.ic_star);
 
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
 
         TextView Title,desc,star,fork,starttoday,lang;
+        ImageView imstar;
 
 
 
@@ -68,6 +71,7 @@ public class RepoAdapter extends RecyclerViewCursorAdapter<RepoAdapter.ListViewH
             star = (TextView) itemView.findViewById(R.id.tvstar);
             fork = (TextView) itemView.findViewById(R.id.tvfork);
             starttoday = (TextView) itemView.findViewById(R.id.tvTodays);
+            imstar=(ImageView)itemView.findViewById(R.id.Cbstar);
         }
     }
 
