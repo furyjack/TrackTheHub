@@ -11,6 +11,7 @@ import android.widget.RemoteViewsService;
 
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.data.MyProvider;
+import play.android.com.trackthehub.util.Utils;
 
 
 public class widgetintentservice extends RemoteViewsService {
@@ -31,8 +32,13 @@ public class widgetintentservice extends RemoteViewsService {
                 }
 
                 final long identityToken = Binder.clearCallingIdentity();
-                String username=intent.getStringExtra("user");
-                username="furyjack";
+                String username=Utils.getString("username","null",getApplicationContext());
+                if(username.equals("null"))
+                {
+                    data=null;
+                    Binder.restoreCallingIdentity(identityToken);
+                    return;
+                }
                 String args[]={username};
                 data = getContentResolver().query(MyContract.buildrepowithuser(username),MyContract.RepoEntry.projection, MyProvider.sRepoSettingSelection,args,null);
 

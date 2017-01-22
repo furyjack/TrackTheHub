@@ -19,6 +19,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.network.fetchService;
 import play.android.com.trackthehub.util.Utils;
 
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.toolbar);
         mtoolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(mtoolbar);
-        
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -93,6 +94,14 @@ public class HomeActivity extends AppCompatActivity {
         Intent i=new Intent();
         i.setAction(ACTION_DATA_UPDATED);
         sendBroadcast(i);
+        String username=Utils.getString("username","null",this);
+        getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
+        Intent fetchdata=new Intent(this,fetchService.class);
+        fetchdata.putExtra("code",1);
+        fetchdata.putExtra("url",String.format("https://api.github.com/user/repos?affiliation=owner&oauth_token=%s",Utils.getString(username+":token","null",this)));
+        fetchdata.putExtra("user",username);
+        startService(fetchdata);
+
 
 
 viewPager.setOffscreenPageLimit(3);
