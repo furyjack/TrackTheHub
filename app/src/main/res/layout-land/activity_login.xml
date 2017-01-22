@@ -13,6 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/display_picture"
 
         />
 
@@ -56,6 +57,13 @@
             android:contentDescription="@string/descLoginButton"
             tools:targetApi="lollipop" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:visibility="invisible"
+            android:id="@+id/pbar"
+            />
 
     </FrameLayout>
 

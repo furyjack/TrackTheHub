@@ -1,6 +1,7 @@
 package play.android.com.trackthehub;
 
 
+import android.content.BroadcastReceiver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
     public static  final int REPO_LOADER=0;
  RepoAdapter adapter;
     TextView tvEmpty;
+    BroadcastReceiver receiver;
     public MyReposFragment() {
 
     }
@@ -49,11 +51,12 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
         pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
         tvEmpty=(TextView)rootview.findViewById(R.id.tv_empty);
-    
+
 
        adapter=new RepoAdapter(null,pbar,getContext());
 //
        mRepoList.setAdapter(adapter);
+
 
 
 
@@ -64,7 +67,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(REPO_LOADER, null, this);
+     getLoaderManager().initLoader(REPO_LOADER, null, this);
 
     }
 
@@ -97,8 +100,9 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-
-
-
+    }
 }

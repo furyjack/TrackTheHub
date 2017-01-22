@@ -45,6 +45,7 @@
                  android:layout_height="wrap_content"
                  android:layout_weight="10"
                  android:id="@+id/Cbstar"
+                 android:contentDescription="@string/star"
                  />
          </LinearLayout>
          <TextView

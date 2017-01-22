@@ -19,6 +19,7 @@
         android:src="@mipmap/ic_launcher"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
+        android:contentDescription="@string/applogo"
         android:background="@color/colorPrimary"
 
         />
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
+        android:inputType="textPassword"
         android:hint="@string/strPassword"
         android:id="@+id/EtPassword"
         />

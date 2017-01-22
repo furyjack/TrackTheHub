@@ -77,10 +77,12 @@ public class fetchService extends IntentService{
 
                             count++;
                         }
+                        getContentResolver().delete(MyContract.buildrepowithuser(user),null,null);
                         getContentResolver().bulkInsert(MyContract.buildrepowithuser(user), values);
                         Intent i=new Intent();
                         i.setAction(ACTION_DATA_UPDATED);
                         sendBroadcast(i);
+
 
                     }
 

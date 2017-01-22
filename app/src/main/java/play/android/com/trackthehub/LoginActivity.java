@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
 
 
-                    //   Utils.SetString(username+":token",token[0],getApplicationContext());
+                     Utils.SetString(username+":token",token[0],getApplicationContext());
                     //   write it to file in an encrypted way
 
 

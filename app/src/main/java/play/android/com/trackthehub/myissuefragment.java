@@ -85,13 +85,7 @@ public class myissuefragment extends Fragment {
         IntentFilter filter = new IntentFilter("play.android.com.trackthehub.issues");
         getContext().registerReceiver(mreciever,filter);
 
-        String username=Utils.getString("username","null",getContext());
 
-        Intent i=new Intent(getContext(),fetchService.class);
-        i.putExtra("code",3);
-        i.putExtra("user",username);
-        i.putExtra("url","https://api.github.com/users/"+username +"/events?oauth_token="+Utils.getString(username+":token","null",getContext()));
-        getContext().startService(i);
 
 
 
@@ -102,7 +96,15 @@ public class myissuefragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        String username=Utils.getString("username","null",getContext());
 
-
-
+        Intent i=new Intent(getContext(),fetchService.class);
+        i.putExtra("code",3);
+        i.putExtra("user",username);
+        i.putExtra("url","https://api.github.com/users/"+username +"/events?oauth_token="+Utils.getString(username+":token","null",getContext()));
+        getContext().startService(i);
+    }
 }

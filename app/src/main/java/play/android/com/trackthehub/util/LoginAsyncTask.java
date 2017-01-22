@@ -47,7 +47,7 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
             arr.put("gist");
             JSONObject obj=new JSONObject();
             obj.put("scopes",arr);
-            obj.put("note","TrackTheHub");
+            obj.put("note","TrackTheHub2");
             byte[] outputInBytes = obj.toString().getBytes("UTF-8");
             os.write(outputInBytes);
             os.close();

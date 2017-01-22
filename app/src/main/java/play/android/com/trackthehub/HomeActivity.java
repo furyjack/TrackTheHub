@@ -16,10 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.network.fetchService;
 import play.android.com.trackthehub.util.Utils;
 
@@ -33,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     ViewPager viewPager;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
+    private AdView madview;
 
 
     private void setupTabIcons() {
@@ -41,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
 
     }
+
 
 
 
@@ -58,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.toolbar);
         mtoolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(mtoolbar);
-
+       madview=(AdView)findViewById(R.id.adview);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -95,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         i.setAction(ACTION_DATA_UPDATED);
         sendBroadcast(i);
         String username=Utils.getString("username","null",this);
-        getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
+
         Intent fetchdata=new Intent(this,fetchService.class);
         fetchdata.putExtra("code",1);
         fetchdata.putExtra("url",String.format("https://api.github.com/user/repos?affiliation=owner&oauth_token=%s",Utils.getString(username+":token","null",this)));
@@ -105,7 +109,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
 viewPager.setOffscreenPageLimit(3);
+        AdRequest adRequest= new AdRequest.Builder().build();
 
+        madview.loadAd(adRequest);
 
 
 
