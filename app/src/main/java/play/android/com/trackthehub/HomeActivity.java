@@ -22,6 +22,8 @@ import java.util.List;
 import play.android.com.trackthehub.network.fetchService;
 import play.android.com.trackthehub.util.Utils;
 
+import static play.android.com.trackthehub.network.fetchService.ACTION_DATA_UPDATED;
+
 public class HomeActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
@@ -87,6 +89,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
         mDrawerToggle.syncState();
+        Intent i=new Intent();
+        i.setAction(ACTION_DATA_UPDATED);
+        sendBroadcast(i);
 
 
 viewPager.setOffscreenPageLimit(3);

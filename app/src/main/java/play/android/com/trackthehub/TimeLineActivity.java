@@ -82,7 +82,7 @@ public class TimeLineActivity extends AppCompatActivity {
         Intent i=new Intent(this,fetchService.class);
         i.putExtra("code",4);
         i.putExtra("user",username);
-        i.putExtra("url","https://api.github.com/events" +"?oauth_token="+Utils.getString(username+":token","null",this));
+        i.putExtra("url","https://api.github.com/events/" +"?oauth_token="+Utils.getString(username+":token","null",this));
         this.startService(i);
 
 

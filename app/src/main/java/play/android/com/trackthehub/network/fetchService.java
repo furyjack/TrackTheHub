@@ -33,6 +33,7 @@ public class fetchService extends IntentService{
     String user;
     RequestQueue mQueue;
     int code;
+    public static final String ACTION_DATA_UPDATED="play.android.com.trackthehub.updated";
     public static final String TAG="error.trackthehub";
 
     public fetchService() {
@@ -77,7 +78,9 @@ public class fetchService extends IntentService{
                             count++;
                         }
                         getContentResolver().bulkInsert(MyContract.buildrepowithuser(user), values);
-
+                        Intent i=new Intent();
+                        i.setAction(ACTION_DATA_UPDATED);
+                        sendBroadcast(i);
 
                     }
 

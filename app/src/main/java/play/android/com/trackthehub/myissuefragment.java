@@ -42,6 +42,11 @@ public class myissuefragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(mreciever);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

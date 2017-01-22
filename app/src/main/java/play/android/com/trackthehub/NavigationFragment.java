@@ -82,7 +82,12 @@ public class NavigationFragment extends Fragment {
         return rootview;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getContext()
+                .unregisterReceiver(mreciever);
+    }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
 
