@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.toolbar);
         mtoolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(mtoolbar);
+        
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
