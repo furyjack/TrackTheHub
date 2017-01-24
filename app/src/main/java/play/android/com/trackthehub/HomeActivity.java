@@ -22,15 +22,12 @@ import com.google.android.gms.ads.AdView;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.android.com.trackthehub.network.fetchService;
 import play.android.com.trackthehub.util.Utils;
-
-import static play.android.com.trackthehub.network.fetchService.ACTION_DATA_UPDATED;
 
 public class HomeActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
-    int[] tabIcons = {R.drawable.ic_repo,R.drawable.ic_issues};
+    int[] tabIcons = {R.drawable.ic_repo, R.drawable.ic_issues};
     TabLayout tabLayout;
     ViewPager viewPager;
     DrawerLayout mDrawerLayout;
@@ -44,8 +41,6 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
 
     }
-
-
 
 
     private void setupViewPager(ViewPager viewPager) {
@@ -62,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.toolbar);
         mtoolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(mtoolbar);
-       madview=(AdView)findViewById(R.id.adview);
+        madview = (AdView) findViewById(R.id.adview);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -83,42 +78,28 @@ public class HomeActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
-    // creates call to onPrepareOptionsMenu()
+                // creates call to onPrepareOptionsMenu()
             }
         };
-
-
-
 
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
 
 
         mDrawerToggle.syncState();
-        Intent i=new Intent();
-        i.setAction(ACTION_DATA_UPDATED);
-        sendBroadcast(i);
-        String username=Utils.getString("username","null",this);
-
-        Intent fetchdata=new Intent(this,fetchService.class);
-        fetchdata.putExtra("code",1);
-        fetchdata.putExtra("url",String.format("https://api.github.com/user/repos?affiliation=owner&oauth_token=%s",Utils.getString(username+":token","null",this)));
-        fetchdata.putExtra("user",username);
-        startService(fetchdata);
 
 
+//        Intent fetchdata = new Intent(this, fetchService.class);
+//        fetchdata.putExtra("code", 1);
+//        fetchdata.putExtra("url", String.format("https://api.github.com/user/repos?affiliation=owner&oauth_token=%s", Utils.getString(username + ":token", "null", this)));
+//        fetchdata.putExtra("user", username);
+//        startService(fetchdata);
 
-viewPager.setOffscreenPageLimit(3);
-        AdRequest adRequest= new AdRequest.Builder().build();
+
+        viewPager.setOffscreenPageLimit(3);
+        AdRequest adRequest = new AdRequest.Builder().build();
 
         madview.loadAd(adRequest);
-
-
-
-
-
-
-
 
 
     }
@@ -126,18 +107,7 @@ viewPager.setOffscreenPageLimit(3);
     @Override
     protected void onResume() {
         super.onResume();
-        String username=Utils.getString("username","null",this);
-        if(Utils.getString("user_fetched","false",this).equals("false"))
-        {
-            Intent i=new Intent(this,fetchService.class);
-            i.putExtra("code",2);
-            i.putExtra("user",username);
-            i.putExtra("url","https://api.github.com/user?oauth_token="+Utils.getString(username+":token","null",this));
-            startService(i);
 
-
-
-        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -172,23 +142,23 @@ viewPager.setOffscreenPageLimit(3);
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
+        MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.mLogout) {
+        if (item.getItemId() == R.id.mLogout) {
 
-            Utils.SetString("loggedin","false",this);
-            Utils.SetString("user_fetched","false",this);
-            startActivity(new Intent(this,LoginActivity.class));
+            Utils.SetString("loggedin", "false", this);
+            Utils.SetString("authhash","",this);
+            Myapplication.setUser(null);
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
             return true;
-
 
 
         }

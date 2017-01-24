@@ -1,10 +1,7 @@
 package play.android.com.trackthehub;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +31,7 @@ public class NavigationFragment extends Fragment {
     ArrayList<String> mlist;
     TextView Tvusername;
     public ImageView ImDp;
-    BroadcastReceiver mreciever;
+
 
 
     public NavigationFragment() {
@@ -56,28 +53,10 @@ public class NavigationFragment extends Fragment {
         mlist = new ArrayList<>();
         mlist.add(getString(R.string.newsfeed));
         mlist.add(getString(R.string.timeline));
-        String fetched=Utils.getString("user_fetched","false",getContext());
-        if(fetched.equals("true"))
-        {
-            String av_url=Utils.getString("dp_url","null",getContext());
-            Picasso.with(getContext()).load(av_url).into(ImDp);
-
-        }
         rvList.setAdapter(new ListAdapter(mlist));
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mreciever=new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                String url=intent.getStringExtra("dp_url");
-                Picasso.with(getContext()).load(url).into(ImDp);
-
-
-
-            }
-        };
-        IntentFilter filter = new IntentFilter("play.android.com.trackthehub.dp");
-        getContext().registerReceiver(mreciever,filter);
+        Picasso.with(getContext()).load(Myapplication.getUser().getAvatarUrl()).into(ImDp);
+        Tvusername.setText(Myapplication.getUser().getLogin());
 
         return rootview;
     }
@@ -85,8 +64,7 @@ public class NavigationFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getContext()
-                .unregisterReceiver(mreciever);
+
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {

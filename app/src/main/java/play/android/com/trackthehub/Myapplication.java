@@ -4,8 +4,15 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
+import play.android.com.trackthehub.model.Owner;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class Myapplication extends Application {
+
+   static Retrofit retrofit;
+   static Owner user;
 
     @Override
     public void onCreate() {
@@ -29,5 +36,25 @@ public class Myapplication extends Application {
 
 // Initialize Stetho with the Initializer
         Stetho.initialize(initializer);
+
+
+      retrofit=new Retrofit.Builder()
+                .baseUrl("https://api.github.com/").addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+    }
+
+
+    public static  Retrofit getRetrofit() {
+        return retrofit;
+    }
+
+    public static Owner getUser() {
+        return user;
+    }
+
+    public static void setUser(Owner user) {
+        Myapplication.user = user;
     }
 }
