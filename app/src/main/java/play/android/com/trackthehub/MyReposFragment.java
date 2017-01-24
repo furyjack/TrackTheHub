@@ -51,11 +51,11 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
         pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
         tvEmpty=(TextView)rootview.findViewById(R.id.tv_empty);
+        pbar.setVisibility(View.INVISIBLE);
 
 
-       adapter=new RepoAdapter(null,pbar,getContext());
-//
-       mRepoList.setAdapter(adapter);
+        adapter=new RepoAdapter(null,pbar,getContext());
+        mRepoList.setAdapter(adapter);
 
 
 

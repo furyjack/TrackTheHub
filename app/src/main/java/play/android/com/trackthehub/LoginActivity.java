@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final String username=etUsername.getText().toString();
         final String password=etPassword.getText().toString();
-        final String basicAuth = "Basic " + Base64.encodeToString((username+":"+password).getBytes(), Base64.NO_WRAP);
+        final String basicAuth = "Basic " + Base64.encodeToString(("furyjack:HARBHAJAn1996").getBytes(), Base64.NO_WRAP);
 
         RetrofitInterface.User userinterface=Myapplication.getRetrofit().create(RetrofitInterface.User.class);
         Call<Owner>logincall=userinterface.getuser(basicAuth);
@@ -89,14 +89,14 @@ public class LoginActivity extends AppCompatActivity {
         etUsername=(EditText)findViewById(R.id.EtUsername);
         pbar=(ProgressBar)findViewById(R.id.pbar);
         btnlogin=(FloatingActionButton)findViewById(R.id.fbLogin);
-        String loggedin= Utils.getString("loggedin","false",this);
-        if(loggedin.equals("true"))
-        {
-            Intent loginIntent=new Intent(getApplicationContext(),HomeActivity.class);
-            startActivity(loginIntent);
-            finish();
-
-        }
+//        String loggedin= Utils.getString("loggedin","false",this);
+//        if(loggedin.equals("true"))
+//        {
+//            Intent loginIntent=new Intent(getApplicationContext(),HomeActivity.class);
+//            startActivity(loginIntent);
+//            finish();
+//
+//        }
 
 
     }

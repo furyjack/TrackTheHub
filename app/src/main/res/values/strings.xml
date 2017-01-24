@@ -32,4 +32,6 @@
     <string name="display_picture">display picture</string>
     <string name="applogo">app logo</string>
     <string name="star">star</string>
+    <string name="TypeIssues">IssuesEvent</string>
+    <string name="TypePush">PushEvent</string>
 </resources>
