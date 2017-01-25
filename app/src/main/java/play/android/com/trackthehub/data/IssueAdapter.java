@@ -38,7 +38,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
 
         String number=mlist.get(position).number;
         String user=mlist.get(position).user;
-        String date=mlist.get(position).date;
+        String date=mlist.get(position).date.substring(0,10);
         String event=String.format(C.getString(R.string.issueopen),number,date,user);
         holder.event.setText(event);
 

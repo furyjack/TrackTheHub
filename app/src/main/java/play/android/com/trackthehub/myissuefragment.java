@@ -16,6 +16,7 @@ import java.util.List;
 
 import play.android.com.trackthehub.data.IssueAdapter;
 import play.android.com.trackthehub.model.Event;
+import play.android.com.trackthehub.model.Issue;
 import play.android.com.trackthehub.util.Issues;
 import play.android.com.trackthehub.util.Repo;
 import play.android.com.trackthehub.util.RetrofitInterface;
@@ -34,7 +35,7 @@ public class myissuefragment extends Fragment {
     ArrayList<Repo> mlist;
     ProgressBar pbar;
 
-    public static final String TAG="error.trackthehub";
+    public static final String TAG = "error.trackthehub";
 
 
     public myissuefragment() {
@@ -51,50 +52,45 @@ public class myissuefragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootview= inflater.inflate(R.layout.fragment_my_repos, container, false);
-        mRepoList=(RecyclerView)rootview.findViewById(R.id.rvRepoList);
-        pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
+        final View rootview = inflater.inflate(R.layout.fragment_my_repos, container, false);
+        mRepoList = (RecyclerView) rootview.findViewById(R.id.rvRepoList);
+        pbar = (ProgressBar) rootview.findViewById(R.id.pbar_repo_fragment);
         pbar.setVisibility(View.INVISIBLE);
-        final ArrayList<Issues>mlist=new ArrayList<>();
-        final IssueAdapter adapter=new IssueAdapter(mlist,getContext());
+        final ArrayList<Issues> mlist = new ArrayList<>();
+        final IssueAdapter adapter = new IssueAdapter(mlist, getContext());
         mRepoList.setAdapter(adapter);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        RetrofitInterface.User userinterface=Myapplication.getRetrofit().create(
-                                        RetrofitInterface.User.class);
+        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
+                RetrofitInterface.User.class);
 
-        Call<List<Event>> geteventscall=userinterface.getevents(Utils.getString("authhash",
-                                       "null",getContext()),Myapplication.getUser().getLogin());
+        Call<List<Event>> geteventscall = userinterface.getevents(Utils.getString("authhash",
+                "null", getContext()), Myapplication.getUser().getLogin());
 
         geteventscall.enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
 
-                if(response.code()==200)
-                {
+                if (response.code() == 200) {
 
-                    List<Event> list=response.body();
-                    for(Event x:list)
-                    {
+                    List<Event> list = response.body();
+                    for (Event x : list) {
 
-                        if(x.getType().equals(getString(R.string.TypePush)))
-                        {
-
-                          Issues issues=new Issues(x.getRepo().getName(),"","","","");
+                        if (x.getType().equals(getString(R.string.TypeIssues))) {
+                            Issue issue = x.getPayload().getIssue();
+                            Issues issues = new Issues(x.getRepo().getName(), issue.getTitle(),
+                                    "" + issue.getNumber(), issue.getCreatedat(), x.getActor().getLogin());
                             mlist.add(issues);
 
                         }
-
 
 
                     }
                     adapter.notifyDataSetChanged();
 
 
-                }
-                else
-                {
-                    Toast.makeText(getContext(), ""+response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -108,22 +104,9 @@ public class myissuefragment extends Fragment {
         });
 
 
-
-
-
         return rootview;
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-//        String username=Utils.getString("username","null",getContext());
-//
-//        Intent i=new Intent(getContext(),fetchService.class);
-//        i.putExtra("code",3);
-//        i.putExtra("user",username);
-//        i.putExtra("url","https://api.github.com/users/"+username +"/events?oauth_token="+Utils.getString(username+":token","null",getContext()));
-//        getContext().startService(i);
-    }
+
 }

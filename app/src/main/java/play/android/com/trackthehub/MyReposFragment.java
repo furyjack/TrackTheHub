@@ -57,7 +57,17 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
         adapter=new RepoAdapter(null,pbar,getContext());
         mRepoList.setAdapter(adapter);
 
+        String username=Myapplication.getUser().getLogin();
+        String args[]={username};
+        Cursor repos = getContext().getContentResolver().query(MyContract.buildrepowithuser(username),
+                                                               MyContract.RepoEntry.projection,
+                                                               MyProvider.sRepoSettingSelection, args, null);
+        if(repos!=null && repos.getCount()==0)
+        {
 
+
+
+        }
 
 
 
@@ -67,7 +77,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-     getLoaderManager().initLoader(REPO_LOADER, null, this);
+        getLoaderManager().initLoader(REPO_LOADER, null, this);
 
     }
 

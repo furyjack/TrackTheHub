@@ -12,7 +12,7 @@
     <string name="drawer_close">close</string>
     <string name="placeholderNameNavigation" translatable="true">Welcome, User</string>
     <string name="descCreateRepo" translatable="true">Created a repository</string>
-    <string name="issueopen" formatted="false" translatable="true">%s opened on %s by %s</string>
+    <string name="issueopen" formatted="false" translatable="true">#%s opened on %s by %s</string>
     <string name="starstodayrepo" formatted="false" translatable="true">%s stars today</string>
     <string name="repositories" >repositories</string>
     <string name="issues">issues</string>

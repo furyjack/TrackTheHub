@@ -30,5 +30,11 @@ public class Payload {
     @Expose
     public List<Commit> commits = null;
 
+    @SerializedName("issue")
+    @Expose
+    public Issue issue;
 
+    public Issue getIssue() {
+        return issue;
+    }
 }

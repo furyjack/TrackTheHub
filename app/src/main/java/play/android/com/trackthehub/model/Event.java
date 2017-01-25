@@ -34,4 +34,12 @@ public class Event {
     public Repo getRepo() {
         return repo;
     }
+
+    public Payload getPayload() {
+        return payload;
+    }
+
+    public Actor getActor() {
+        return actor;
+    }
 }

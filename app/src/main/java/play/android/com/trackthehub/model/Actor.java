@@ -26,4 +26,28 @@ public class Actor {
         @Expose
         public String avatarUrl;
 
+
+        public Integer getId() {
+                return id;
+        }
+
+        public String getLogin() {
+                return login;
+        }
+
+        public String getDisplayLogin() {
+                return displayLogin;
+        }
+
+        public String getGravatarId() {
+                return gravatarId;
+        }
+
+        public String getUrl() {
+                return url;
+        }
+
+        public String getAvatarUrl() {
+                return avatarUrl;
+        }
 }
