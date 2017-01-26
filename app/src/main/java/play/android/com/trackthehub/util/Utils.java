@@ -24,10 +24,10 @@ public  class Utils {
 
 
 
-     static public Repo getdata()
+     static public Util_Repo getdata()
     {
 
-        return new Repo("furyjack/ItsMyGang","its an awesome app:O","Java","320","19","40","furyjack");
+        return new Util_Repo("furyjack/ItsMyGang","its an awesome app:O","Java","320","19","40","furyjack");
     }
 
   public  static void SetString(String key,String value, Context context)
@@ -49,10 +49,10 @@ public  class Utils {
 
     }
 
-    public static ArrayList<Repo> getRepoListFromJson(JSONArray data,String username)
+    public static ArrayList<Util_Repo> getRepoListFromJson(JSONArray data, String username)
     {
 
-        ArrayList<Repo>list=new ArrayList<>();
+        ArrayList<Util_Repo>list=new ArrayList<>();
         for(int i=0;i<data.length();i++)
         {
             try {
@@ -67,7 +67,7 @@ public  class Utils {
                 stoday="0";
                 user=username;
 
-                Repo r=new Repo(Title,Desc,lang,stars,forks,stoday,user);
+                Util_Repo r=new Util_Repo(Title,Desc,lang,stars,forks,stoday,user);
                 list.add(r);
 
 
@@ -171,11 +171,11 @@ return list;
 
     }
 
-    public static ArrayList<Event> geteventlist(String data) throws JSONException {
+    public static ArrayList<Util_Event> geteventlist(String data) throws JSONException {
 
 
         JSONArray array=new JSONArray(data);
-        ArrayList<Event>list=new ArrayList<>();
+        ArrayList<Util_Event>list=new ArrayList<>();
         for(int i=0;i<array.length();i++)
         {
             JSONObject obj=array.getJSONObject(i);
@@ -183,7 +183,7 @@ return list;
             String user=obj.getJSONObject("actor").getString("login");
             String repo=obj.getJSONObject("repo").getString("name");
 
-            Event event=new Event(user,repo,type);
+            Util_Event event=new Util_Event(user,repo,type);
             switch (type)
             {
                 case "PushEvent":

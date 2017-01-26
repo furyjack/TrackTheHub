@@ -7,25 +7,25 @@ public class Event {
 
     @SerializedName("id")
     @Expose
-     String id;
+    String id;
     @SerializedName("type")
     @Expose
     private String type;
     @SerializedName("actor")
     @Expose
-     Actor actor;
+    private Actor actor;
     @SerializedName("repo")
     @Expose
-     play.android.com.trackthehub.model.Repo repo;
+    private Repo repo;
     @SerializedName("payload")
     @Expose
-     Payload payload;
+    private Payload payload;
     @SerializedName("public")
     @Expose
-     Boolean _public;
+    Boolean _public;
     @SerializedName("created_at")
     @Expose
-     String createdAt;
+    String createdAt;
 
     public String getType() {
         return type;

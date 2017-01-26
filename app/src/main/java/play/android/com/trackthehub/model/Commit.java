@@ -8,13 +8,13 @@ public class Commit {
 
     @SerializedName("sha")
     @Expose
-    public String sha;
+    private String sha;
     @SerializedName("author")
     @Expose
     public Author author;
     @SerializedName("message")
     @Expose
-    public String message;
+    private String message;
     @SerializedName("distinct")
     @Expose
     public Boolean distinct;

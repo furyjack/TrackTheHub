@@ -19,7 +19,7 @@ public class Payload {
     public Integer distinctSize;
     @SerializedName("ref")
     @Expose
-    public String ref;
+    private String ref;
     @SerializedName("head")
     @Expose
     public String head;
@@ -28,11 +28,11 @@ public class Payload {
     public String before;
     @SerializedName("commits")
     @Expose
-    public List<Commit> commits = null;
+    private List<Commit> commits = null;
 
     @SerializedName("issue")
     @Expose
-    public Issue issue;
+    private Issue issue;
 
     public Issue getIssue() {
         return issue;

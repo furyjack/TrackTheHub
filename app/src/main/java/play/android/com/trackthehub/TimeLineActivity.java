@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import play.android.com.trackthehub.model.Commit;
-import play.android.com.trackthehub.util.Event;
+import play.android.com.trackthehub.util.Util_Event;
 import play.android.com.trackthehub.util.RetrofitInterface;
 import play.android.com.trackthehub.util.Utils;
 import retrofit2.Call;
@@ -31,7 +31,7 @@ public class TimeLineActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-    ArrayList<Event> mlist;
+    ArrayList<Util_Event> mlist;
     Radater radater;
     TextView TVTITLE;
 
@@ -58,7 +58,7 @@ public class TimeLineActivity extends AppCompatActivity {
                     {
                         if(event.getType().equals(getString(R.string.TypePush)))
                         {
-                            Event e=new Event(event.getActor().getLogin(),
+                            Util_Event e=new Util_Event(event.getActor().getLogin(),
                                     event.getRepo().getName(),
                                     getString(R.string.TypePush));
 
@@ -77,7 +77,7 @@ public class TimeLineActivity extends AppCompatActivity {
                         }
                         else if(event.getType().equals(getString(R.string.TypeCreate)))
                         {
-                            Event e=new Event(event.getActor().getLogin(),
+                            Util_Event e=new Util_Event(event.getActor().getLogin(),
                                     event.getRepo().getName(),
                                     getString(R.string.TypeCreate));
                             mlist.add(e);
@@ -88,7 +88,7 @@ public class TimeLineActivity extends AppCompatActivity {
                         else if(event.getType().equals(getString(R.string.TypeFork)))
                         {
 
-                            Event e=new Event(event.getActor().getLogin(),
+                            Util_Event e=new Util_Event(event.getActor().getLogin(),
                                     event.getRepo().getName(),
                                     getString(R.string.TypeFork));
 
@@ -194,9 +194,9 @@ public class TimeLineActivity extends AppCompatActivity {
     class Radater extends RecyclerView.Adapter<viewholder>
     {
 
-        ArrayList<Event>mlist;
+        ArrayList<Util_Event>mlist;
 
-        Radater(ArrayList<Event> mlist) {
+        Radater(ArrayList<Util_Event> mlist) {
             this.mlist = mlist;
         }
 
@@ -210,7 +210,7 @@ public class TimeLineActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(viewholder holder, int position) {
 
-            Event event=mlist.get(position);
+            Util_Event event=mlist.get(position);
             holder.Name.setText(event.user);
             switch(event.type)
             {

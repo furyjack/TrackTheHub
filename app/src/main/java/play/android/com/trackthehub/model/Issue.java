@@ -8,19 +8,19 @@ public class Issue {
 
     @SerializedName("state")
     @Expose
-    public String state;
+    private String state;
     @SerializedName("created_at")
     @Expose
-    public String createdat;
+    private String createdat;
     @SerializedName("closed_at")
     @Expose
-    public String closedat;
+    private String closedat;
     @SerializedName("title")
     @Expose
     public String title;
     @SerializedName("number")
     @Expose
-    public int number;
+    private int number;
     @SerializedName("id")
     @Expose
     public long id;
