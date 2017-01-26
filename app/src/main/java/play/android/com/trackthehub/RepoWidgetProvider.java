@@ -1,7 +1,6 @@
 package play.android.com.trackthehub;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -23,12 +22,12 @@ public class RepoWidgetProvider extends AppWidgetProvider {
 
             // Create an Intent to launch ExampleActivity
             Intent j = new Intent(context, HomeActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, j, 0);
+
 
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_appwidget);
-            views.setOnClickPendingIntent(R.id.btntitlew, pendingIntent);
+
 
             views.setEmptyView(R.id.lvquotes, R.id.wiget_empty);
 
