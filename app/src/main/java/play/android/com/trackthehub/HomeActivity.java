@@ -89,13 +89,6 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
 
 
-//        Intent fetchdata = new Intent(this, fetchService.class);
-//        fetchdata.putExtra("code", 1);
-//        fetchdata.putExtra("url", String.format("https://api.github.com/user/repos?affiliation=owner&oauth_token=%s", Utils.getString(username + ":token", "null", this)));
-//        fetchdata.putExtra("user", username);
-//        startService(fetchdata);
-
-
         viewPager.setOffscreenPageLimit(3);
         AdRequest adRequest = new AdRequest.Builder().build();
 
@@ -154,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.mLogout) {
 
             Utils.SetString("loggedin", "false", this);
-            Utils.SetString("authhash","",this);
+            Utils.SetString("authhash", "", this);
             Myapplication.setUser(null);
             startActivity(new Intent(this, LoginActivity.class));
             finish();

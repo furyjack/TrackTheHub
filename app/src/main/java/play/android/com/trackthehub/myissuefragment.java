@@ -43,8 +43,7 @@ public class myissuefragment extends Fragment {
     }
 
 
-    public void updateui()
-    {
+    public void updateui() {
         mRefreshLayout.setRefreshing(true);
         RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
                 RetrofitInterface.User.class);
@@ -91,15 +90,13 @@ public class myissuefragment extends Fragment {
     }
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View rootview = inflater.inflate(R.layout.fragment_my_repos, container, false);
         mRepoList = (RecyclerView) rootview.findViewById(R.id.rvRepoList);
-        mRefreshLayout=(SwipeRefreshLayout)rootview.findViewById(R.id.mSwipeRefreshLayout);
+        mRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.mSwipeRefreshLayout);
         mlist = new ArrayList<>();
         adapter = new IssueAdapter(mlist, getContext());
         mRepoList.setAdapter(adapter);
@@ -111,8 +108,6 @@ public class myissuefragment extends Fragment {
                 updateui();
             }
         });
-
-
 
 
         return rootview;

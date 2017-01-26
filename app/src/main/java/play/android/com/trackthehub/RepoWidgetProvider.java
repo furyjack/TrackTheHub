@@ -18,7 +18,7 @@ public class RepoWidgetProvider extends AppWidgetProvider {
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        for (int appWidgetId:appWidgetIds) {
+        for (int appWidgetId : appWidgetIds) {
 
 
             // Create an Intent to launch ExampleActivity
@@ -28,9 +28,9 @@ public class RepoWidgetProvider extends AppWidgetProvider {
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_appwidget);
-            views.setOnClickPendingIntent(R.id.btntitlew,pendingIntent);
+            views.setOnClickPendingIntent(R.id.btntitlew, pendingIntent);
 
-            views.setEmptyView(R.id.lvquotes,R.id.wiget_empty);
+            views.setEmptyView(R.id.lvquotes, R.id.wiget_empty);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 setRemoteAdapter(context, views);
@@ -44,14 +44,12 @@ public class RepoWidgetProvider extends AppWidgetProvider {
         }
 
 
-
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if(fetchService.ACTION_DATA_UPDATED.equals(intent.getAction()))
-        {
+        if (fetchService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
@@ -70,10 +68,8 @@ public class RepoWidgetProvider extends AppWidgetProvider {
     @SuppressWarnings("deprecation")
     private void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(0, R.id.lvquotes,
-                new Intent(context,  widgetintentservice.class));
+                new Intent(context, widgetintentservice.class));
     }
-
-
 
 
 }

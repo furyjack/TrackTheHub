@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText etUsername,etPassword;
+    EditText etUsername, etPassword;
     ProgressBar pbar;
     FloatingActionButton btnlogin;
 
@@ -29,40 +29,34 @@ public class LoginActivity extends AppCompatActivity {
         pbar.setVisibility(View.VISIBLE);
         btnlogin.setVisibility(View.INVISIBLE);
 
-        final String username=etUsername.getText().toString();
-        final String password=etPassword.getText().toString();
-        final String basicAuth = "Basic " + Base64.encodeToString(("furyjack:HARBHAJAn1996").getBytes(), Base64.NO_WRAP);
+        final String username = etUsername.getText().toString();
+        final String password = etPassword.getText().toString();
+        final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
 
-        RetrofitInterface.User userinterface=Myapplication.getRetrofit().create(RetrofitInterface.User.class);
-        Call<Owner>logincall=userinterface.getuser(basicAuth);
+        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(RetrofitInterface.User.class);
+        Call<Owner> logincall = userinterface.getuser(basicAuth);
 
         logincall.enqueue(new Callback<Owner>() {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
-                if(response.code()==200)
-                {
+                if (response.code() == 200) {
                     Myapplication.setUser(response.body());
                     Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    Utils.SetString("authhash",basicAuth,getApplicationContext());
-                    Utils.SetString("loggedin","true",getApplicationContext());
+                    Utils.SetString("authhash", basicAuth, getApplicationContext());
+                    Utils.SetString("loggedin", "true", getApplicationContext());
                     pbar.setVisibility(View.INVISIBLE);
-                    Intent loginIntent=new Intent(getApplicationContext(),HomeActivity.class);
+                    Intent loginIntent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(loginIntent);
                     finish();
 
 
-
-                }
-                else
-                {
+                } else {
                     Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                     pbar.setVisibility(View.INVISIBLE);
                     btnlogin.setVisibility(View.VISIBLE);
 
 
                 }
-
-
 
 
             }
@@ -76,8 +70,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
 
@@ -85,18 +77,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        etPassword= (EditText) findViewById(R.id.EtPassword);
-        etUsername=(EditText)findViewById(R.id.EtUsername);
-        pbar=(ProgressBar)findViewById(R.id.pbar);
-        btnlogin=(FloatingActionButton)findViewById(R.id.fbLogin);
-//        String loggedin= Utils.getString("loggedin","false",this);
-//        if(loggedin.equals("true"))
-//        {
-//            Intent loginIntent=new Intent(getApplicationContext(),HomeActivity.class);
-//            startActivity(loginIntent);
-//            finish();
-//
-//        }
+        etPassword = (EditText) findViewById(R.id.EtPassword);
+        etUsername = (EditText) findViewById(R.id.EtUsername);
+        pbar = (ProgressBar) findViewById(R.id.pbar);
+        btnlogin = (FloatingActionButton) findViewById(R.id.fbLogin);
 
 
     }

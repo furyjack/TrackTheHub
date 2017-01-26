@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import play.android.com.trackthehub.model.Commit;
-import play.android.com.trackthehub.util.Util_Event;
 import play.android.com.trackthehub.util.RetrofitInterface;
+import play.android.com.trackthehub.util.Util_Event;
 import play.android.com.trackthehub.util.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +27,7 @@ import retrofit2.Response;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
-    private static final String TAG ="error.trackthehub" ;
+    private static final String TAG = "error.trackthehub";
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -36,10 +36,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     Radater radater;
 
 
-
-
-    void updateui()
-    {
+    void updateui() {
         mlist.clear();
         mSwipeRefreshLayout.setRefreshing(true);
         RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
@@ -52,19 +49,16 @@ public class NewsFeedActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<play.android.com.trackthehub.model.Event>> call, Response<List<play.android.com.trackthehub.model.Event>> response) {
 
-                if(response.code()==200)
-                {
-                    List<play.android.com.trackthehub.model.Event>list=response.body();
-                    for(play.android.com.trackthehub.model.Event event:list)
-                    {
-                        if(event.getType().equals(getString(R.string.TypePush)))
-                        {
-                            Util_Event e=new Util_Event(event.getActor().getLogin(),
+                if (response.code() == 200) {
+                    List<play.android.com.trackthehub.model.Event> list = response.body();
+                    for (play.android.com.trackthehub.model.Event event : list) {
+                        if (event.getType().equals(getString(R.string.TypePush))) {
+                            Util_Event e = new Util_Event(event.getActor().getLogin(),
                                     event.getRepo().getName(),
                                     getString(R.string.TypePush));
 
-                            Commit c=event.getPayload().getCommit();
-                            if(c!=null) {
+                            Commit c = event.getPayload().getCommit();
+                            if (c != null) {
                                 e.setCommit(c.getSha().substring(0, 7));
                                 e.setCommitMessage(c.getMessage());
                             }
@@ -72,35 +66,24 @@ public class NewsFeedActivity extends AppCompatActivity {
                             mlist.add(e);
 
 
-
-
-
-                        }
-                        else if(event.getType().equals(getString(R.string.TypeCreate)))
-                        {
-                            Util_Event e=new Util_Event(event.getActor().getLogin(),
+                        } else if (event.getType().equals(getString(R.string.TypeCreate))) {
+                            Util_Event e = new Util_Event(event.getActor().getLogin(),
                                     event.getRepo().getName(),
                                     getString(R.string.TypeCreate));
                             mlist.add(e);
 
 
+                        } else if (event.getType().equals(getString(R.string.TypeFork))) {
 
-                        }
-                        else if(event.getType().equals(getString(R.string.TypeFork)))
-                        {
-
-                            Util_Event e=new Util_Event(event.getActor().getLogin(),
+                            Util_Event e = new Util_Event(event.getActor().getLogin(),
                                     event.getRepo().getName(),
                                     getString(R.string.TypeFork));
 
-                            e.setBranch(e.user+"/"+e.repo.split("/")[1]);
+                            e.setBranch(e.user + "/" + e.repo.split("/")[1]);
                             mlist.add(e);
 
 
-
-
                         }
-
 
 
                     }
@@ -110,13 +93,8 @@ public class NewsFeedActivity extends AppCompatActivity {
                     mSwipeRefreshLayout.setRefreshing(false);
 
 
-
-
-
-                }
-                else
-                {
-                    Log.d(TAG, "onResponse: newsfeed "+response.code());
+                } else {
+                    Log.d(TAG, "onResponse: newsfeed " + response.code());
                 }
 
 
@@ -132,9 +110,6 @@ public class NewsFeedActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
     @Override
@@ -143,14 +118,14 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_news_feed);
 
-        mToolbar= (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setDistanceToTriggerSync(200);
 
-        mRecyclerView=(RecyclerView) findViewById(R.id.recycler_view);
-        mlist=new ArrayList<>();
-        radater=new NewsFeedActivity.Radater(mlist);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mlist = new ArrayList<>();
+        radater = new NewsFeedActivity.Radater(mlist);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(radater);
 
@@ -160,40 +135,35 @@ public class NewsFeedActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-              updateui();
+                updateui();
 
 
             }
         });
 
 
-
-
     }
 
-   
 
-    class viewholder extends RecyclerView.ViewHolder
-    {
+    class viewholder extends RecyclerView.ViewHolder {
 
-        TextView Name,Desc,event;
+        TextView Name, Desc, event;
 
 
         public viewholder(View itemView) {
             super(itemView);
-            Name=(TextView)itemView.findViewById(R.id.tvRepo);
-            Desc=(TextView)itemView.findViewById(R.id.tvDesc);
-            event=(TextView)itemView.findViewById(R.id.tvevent);
+            Name = (TextView) itemView.findViewById(R.id.tvRepo);
+            Desc = (TextView) itemView.findViewById(R.id.tvDesc);
+            event = (TextView) itemView.findViewById(R.id.tvevent);
 
 
         }
     }
 
 
-    class Radater extends RecyclerView.Adapter<viewholder>
-    {
+    class Radater extends RecyclerView.Adapter<viewholder> {
 
-        ArrayList<Util_Event>mlist;
+        ArrayList<Util_Event> mlist;
 
         public Radater(ArrayList<Util_Event> mlist) {
             this.mlist = mlist;
@@ -201,39 +171,35 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         @Override
         public viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater=getLayoutInflater();
-            View root=inflater.inflate(R.layout.cardviewissues,parent,false);
-            return  new viewholder(root);
+            LayoutInflater inflater = getLayoutInflater();
+            View root = inflater.inflate(R.layout.cardviewissues, parent, false);
+            return new viewholder(root);
         }
 
         @Override
         public void onBindViewHolder(viewholder holder, int position) {
 
-            Util_Event event=mlist.get(position);
+            Util_Event event = mlist.get(position);
             holder.Name.setText(event.user);
-            switch(event.type)
-            {
-                case "PushEvent":
-                {
-                    holder.Desc.setText(String.format(getString(R.string.timelinebranch),event.getBranch(),event.repo));
-                    holder.event.setText(String.format("%s %s",event.getCommit(),event.getCommitMessage()));
+            switch (event.type) {
+                case "PushEvent": {
+                    holder.Desc.setText(String.format(getString(R.string.timelinebranch), event.getBranch(), event.repo));
+                    holder.event.setText(String.format("%s %s", event.getCommit(), event.getCommitMessage()));
 
                     break;
                 }
 
-                case "CreateEvent":
-                {
+                case "CreateEvent": {
                     holder.Desc.setText(R.string.descCreateRepo);
-                    holder.event.setText(String.format(getString(R.string.timelinerepo),event.repo));
+                    holder.event.setText(String.format(getString(R.string.timelinerepo), event.repo));
 
                     break;
                 }
 
-                case "ForkEvent":
-                {
+                case "ForkEvent": {
 
-                    holder.Desc.setText(String.format(getString(R.string.timelineforked),event.repo));
-                    holder.event.setText(String.format(getString(R.string.timelineforkedevent),event.getBranch()));
+                    holder.Desc.setText(String.format(getString(R.string.timelineforked), event.repo));
+                    holder.event.setText(String.format(getString(R.string.timelineforkedevent), event.getBranch()));
 
                     break;
                 }
@@ -250,12 +216,4 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-    
-    
 }

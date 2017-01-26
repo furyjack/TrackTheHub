@@ -11,13 +11,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Myapplication extends Application {
 
-   static Retrofit retrofit;
-   static Owner user;
+    static Retrofit retrofit;
+    static Owner user;
 
     @Override
     public void onCreate() {
         super.onCreate();
-      
+
         Stetho.InitializerBuilder initializerBuilder =
                 Stetho.newInitializerBuilder(this);
 
@@ -38,7 +38,7 @@ public class Myapplication extends Application {
         Stetho.initialize(initializer);
 
 
-      retrofit=new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.github.com/").addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -46,7 +46,7 @@ public class Myapplication extends Application {
     }
 
 
-    public static  Retrofit getRetrofit() {
+    public static Retrofit getRetrofit() {
         return retrofit;
     }
 

@@ -33,18 +33,17 @@ public class widgetintentservice extends RemoteViewsService {
                 final long identityToken = Binder.clearCallingIdentity();
 
                 String username;
-                if(Myapplication.getUser()!=null)
-                 username=Myapplication.getUser().getLogin();
+                if (Myapplication.getUser() != null)
+                    username = Myapplication.getUser().getLogin();
                 else
-                 username="null";
-                if(username.equals("null"))
-                {
-                    data=null;
+                    username = "null";
+                if (username.equals("null")) {
+                    data = null;
                     Binder.restoreCallingIdentity(identityToken);
                     return;
                 }
-                String args[]={username};
-                data = getContentResolver().query(MyContract.buildrepowithuser(username),MyContract.RepoEntry.projection, MyProvider.sRepoSettingSelection,args,null);
+                String args[] = {username};
+                data = getContentResolver().query(MyContract.buildrepowithuser(username), MyContract.RepoEntry.projection, MyProvider.sRepoSettingSelection, args, null);
 
                 Binder.restoreCallingIdentity(identityToken);
             }
@@ -73,15 +72,11 @@ public class widgetintentservice extends RemoteViewsService {
                 String reponame = data.getString(data.getColumnIndex(MyContract.RepoEntry.COLUMN_TITLE));
 
 
-
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                     setRemoteContentDescription(views, reponame);
                 }
 
                 views.setTextViewText(android.R.id.text1, reponame);
-
-
 
 
                 return views;

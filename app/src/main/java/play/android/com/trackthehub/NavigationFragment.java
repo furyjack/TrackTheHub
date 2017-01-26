@@ -33,11 +33,9 @@ public class NavigationFragment extends Fragment {
     public ImageView ImDp;
 
 
-
     public NavigationFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -46,9 +44,9 @@ public class NavigationFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_navigation, container, false);
         rvList = (RecyclerView) rootview.findViewById(R.id.drawerList);
-        Tvusername=(TextView)rootview.findViewById(tv_wel);
-        ImDp=(de.hdodenhof.circleimageview.CircleImageView)rootview.findViewById(R.id.img_pr);
-        String user= Utils.getString("username","user",getContext());
+        Tvusername = (TextView) rootview.findViewById(tv_wel);
+        ImDp = (de.hdodenhof.circleimageview.CircleImageView) rootview.findViewById(R.id.img_pr);
+        String user = Utils.getString("username", "user", getContext());
         Tvusername.setText(user);
         mlist = new ArrayList<>();
         mlist.add(getString(R.string.newsfeed));
@@ -99,18 +97,16 @@ public class NavigationFragment extends Fragment {
             holder.label.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    switch (position)
-                    {
+                    switch (position) {
                         case 0:
-                            startActivity(new Intent(getContext(),NewsFeedActivity.class));
+                            startActivity(new Intent(getContext(), NewsFeedActivity.class));
                             break;
-                        case 1:
-                        {
-                            startActivity(new Intent(getContext(),TimeLineActivity.class));
+                        case 1: {
+                            startActivity(new Intent(getContext(), TimeLineActivity.class));
                             break;
                         }
 
-                        }
+                    }
                 }
             });
 
