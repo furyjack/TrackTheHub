@@ -11,7 +11,6 @@ import android.widget.RemoteViewsService;
 
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.data.MyProvider;
-import play.android.com.trackthehub.util.Utils;
 
 
 public class widgetintentservice extends RemoteViewsService {
@@ -32,7 +31,12 @@ public class widgetintentservice extends RemoteViewsService {
                 }
 
                 final long identityToken = Binder.clearCallingIdentity();
-                String username=Utils.getString("username","null",getApplicationContext());
+
+                String username;
+                if(Myapplication.getUser()!=null)
+                 username=Myapplication.getUser().getLogin();
+                else
+                 username="null";
                 if(username.equals("null"))
                 {
                     data=null;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="play.android.com.trackthehub">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,10 +27,14 @@
 
         <provider
             android:name=".data.MyProvider"
-            android:authorities="play.android.com.trackthehub" />
+            android:authorities="play.android.com.trackthehub"
+            android:exported="false"
+            />
 
         <activity android:name=".NewsFeedActivity" />
-        <activity android:name=".TimeLineActivity"></activity>
+        <activity android:name=".TimeLineActivity">
+
+        </activity>
 
         <activity android:name="com.google.android.gms.ads.AdActivity"
           />
