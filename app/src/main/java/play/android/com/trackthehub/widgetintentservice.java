@@ -13,7 +13,7 @@ import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.data.MyProvider;
 
 
-public class widgetintentservice extends RemoteViewsService {
+public class WidgetIntentService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(final Intent intent) {
         return new RemoteViewsFactory() {
@@ -33,8 +33,8 @@ public class widgetintentservice extends RemoteViewsService {
                 final long identityToken = Binder.clearCallingIdentity();
 
                 String username;
-                if (Myapplication.getUser() != null)
-                    username = Myapplication.getUser().getLogin();
+                if (MyApplication.getUser() != null)
+                    username = MyApplication.getUser().getLogin();
                 else
                     username = "null";
                 if (username.equals("null")) {
@@ -43,7 +43,7 @@ public class widgetintentservice extends RemoteViewsService {
                     return;
                 }
                 String args[] = {username};
-                data = getContentResolver().query(MyContract.buildrepowithuser(username), MyContract.RepoEntry.projection, MyProvider.sRepoSettingSelection, args, null);
+                data = getContentResolver().query(MyContract.buildRepoWithUser(username), MyContract.RepoEntry.projection, MyProvider.sRepoSettingSelection, args, null);
 
                 Binder.restoreCallingIdentity(identityToken);
             }

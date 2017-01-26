@@ -11,7 +11,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
-import play.android.com.trackthehub.network.fetchService;
+import play.android.com.trackthehub.network.FetchService;
 
 public class RepoWidgetProvider extends AppWidgetProvider {
 
@@ -49,7 +49,7 @@ public class RepoWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if (fetchService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        if (FetchService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
@@ -61,14 +61,14 @@ public class RepoWidgetProvider extends AppWidgetProvider {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(R.id.lvquotes,
-                new Intent(context, widgetintentservice.class));
+                new Intent(context, WidgetIntentService.class));
     }
 
 
     @SuppressWarnings("deprecation")
     private void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(0, R.id.lvquotes,
-                new Intent(context, widgetintentservice.class));
+                new Intent(context, WidgetIntentService.class));
     }
 
 

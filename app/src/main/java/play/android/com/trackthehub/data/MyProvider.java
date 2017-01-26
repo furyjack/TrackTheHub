@@ -97,7 +97,7 @@ public class MyProvider extends ContentProvider {
         switch (match) {
             case REPO_WITH_USER: {
                 long id = db.insert(MyContract.RepoEntry.TABLE_NAME, null, contentValues);
-                returnUri = ContentUris.withAppendedId(MyContract.buildrepowithuser(uri.getPathSegments().get(1)), id);
+                returnUri = ContentUris.withAppendedId(MyContract.buildRepoWithUser(uri.getPathSegments().get(1)), id);
                 break;
             }
 

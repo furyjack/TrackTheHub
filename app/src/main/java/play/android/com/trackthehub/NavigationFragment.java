@@ -53,8 +53,8 @@ public class NavigationFragment extends Fragment {
         mlist.add(getString(R.string.timeline));
         rvList.setAdapter(new ListAdapter(mlist));
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Picasso.with(getContext()).load(Myapplication.getUser().getAvatarUrl()).into(ImDp);
-        Tvusername.setText(Myapplication.getUser().getLogin());
+        Picasso.with(getContext()).load(MyApplication.getUser().getAvatarUrl()).into(ImDp);
+        Tvusername.setText(MyApplication.getUser().getLogin());
 
         return rootview;
     }

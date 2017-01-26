@@ -14,12 +14,12 @@ import com.google.android.gms.ads.AdView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class emptyfrag extends Fragment {
+public class EmptyFrag extends Fragment {
 
     private AdView madview;
 
 
-    public emptyfrag() {
+    public EmptyFrag() {
         // Required empty public constructor
     }
 

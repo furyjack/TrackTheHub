@@ -33,14 +33,14 @@ public class LoginActivity extends AppCompatActivity {
         final String password = etPassword.getText().toString();
         final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
 
-        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(RetrofitInterface.User.class);
+        RetrofitInterface.User userinterface = MyApplication.getRetroFit().create(RetrofitInterface.User.class);
         Call<Owner> logincall = userinterface.getuser(basicAuth);
 
         logincall.enqueue(new Callback<Owner>() {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
                 if (response.code() == 200) {
-                    Myapplication.setUser(response.body());
+                    MyApplication.setUser(response.body());
                     Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
                     Utils.SetString("authhash", basicAuth, getApplicationContext());
                     Utils.SetString("loggedin", "true", getApplicationContext());

@@ -35,7 +35,7 @@ public class MyContract {
 
     }
 
-    public static Uri buildrepowithuser(String username) {
+    public static Uri buildRepoWithUser(String username) {
 
         return BASE_CONTENT_URI.buildUpon().appendPath(PATH_REPO).appendPath(username).build();
 

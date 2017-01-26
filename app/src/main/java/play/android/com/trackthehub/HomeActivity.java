@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new MyReposFragment(), getString(R.string.repositories));
-        adapter.addFragment(new myissuefragment(), getString(R.string.issues));
+        adapter.addFragment(new MyIssueFragment(), getString(R.string.issues));
         viewPager.setAdapter(adapter);
     }
 
@@ -148,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
 
             Utils.SetString("loggedin", "false", this);
             Utils.SetString("authhash", "", this);
-            Myapplication.setUser(null);
+            MyApplication.setUser(null);
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return true;

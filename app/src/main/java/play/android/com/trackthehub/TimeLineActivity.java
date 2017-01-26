@@ -36,10 +36,10 @@ public class TimeLineActivity extends AppCompatActivity {
     TextView TVTITLE;
 
 
-    void updateui() {
+    void updateUi() {
         mlist.clear();
         mSwipeRefreshLayout.setRefreshing(true);
-        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
+        RetrofitInterface.User userinterface = MyApplication.getRetroFit().create(
                 RetrofitInterface.User.class);
 
         Call<List<play.android.com.trackthehub.model.Event>> geteventscall = userinterface.get_timeline_events(Utils.getString("authhash",
@@ -131,13 +131,13 @@ public class TimeLineActivity extends AppCompatActivity {
         radater = new Radater(mlist);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(radater);
-        updateui();
+        updateUi();
 
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                updateui();
+                updateUi();
 
             }
         });

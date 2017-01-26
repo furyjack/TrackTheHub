@@ -24,7 +24,7 @@ import android.widget.TextView;
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.data.MyProvider;
 import play.android.com.trackthehub.data.RepoAdapter;
-import play.android.com.trackthehub.network.fetchService;
+import play.android.com.trackthehub.network.FetchService;
 
 
 public class MyReposFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -64,18 +64,18 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
             }
         };
 
-        IntentFilter intentFilter = new IntentFilter(fetchService.ACTION_DATA_UPDATED);
+        IntentFilter intentFilter = new IntentFilter(FetchService.ACTION_DATA_UPDATED);
         getContext().registerReceiver(DataUpdateReceiver, intentFilter);
 
-        final String username = Myapplication.getUser().getLogin();
+        final String username = MyApplication.getUser().getLogin();
         String args[] = {username};
-        Cursor repos = getContext().getContentResolver().query(MyContract.buildrepowithuser(username),
+        Cursor repos = getContext().getContentResolver().query(MyContract.buildRepoWithUser(username),
                 MyContract.RepoEntry.projection,
                 MyProvider.sRepoSettingSelection, args, null);
         if (repos != null && repos.getCount() == 0) {
             mRefreshLayout.setRefreshing(true);
-            Intent i = new Intent(getContext(), fetchService.class);
-            i.setAction(fetchService.ACTION_UPDATE_DATA);
+            Intent i = new Intent(getContext(), FetchService.class);
+            i.setAction(FetchService.ACTION_UPDATE_DATA);
             getContext().startService(i);
             repos.close();
         }
@@ -84,9 +84,9 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
             @Override
             public void onRefresh() {
 
-                getContext().getContentResolver().delete(MyContract.buildrepowithuser(username), null, null);
-                Intent i = new Intent(getContext(), fetchService.class);
-                i.setAction(fetchService.ACTION_UPDATE_DATA);
+                getContext().getContentResolver().delete(MyContract.buildRepoWithUser(username), null, null);
+                Intent i = new Intent(getContext(), FetchService.class);
+                i.setAction(FetchService.ACTION_UPDATE_DATA);
                 getContext().startService(i);
 
             }
@@ -105,10 +105,10 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String usename = Myapplication.getUser().getLogin();
+        String usename = MyApplication.getUser().getLogin();
         String[] argument = {usename};
 
-        Uri repoRetrieve = MyContract.buildrepowithuser(usename);
+        Uri repoRetrieve = MyContract.buildRepoWithUser(usename);
         return new CursorLoader(getContext(), repoRetrieve, MyContract.RepoEntry.projection, MyProvider.sRepoSettingSelection, argument, null);
 
 

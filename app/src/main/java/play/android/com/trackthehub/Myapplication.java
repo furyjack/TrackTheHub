@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class Myapplication extends Application {
+public class MyApplication extends Application {
 
     static Retrofit retrofit;
     static Owner user;
@@ -46,7 +46,7 @@ public class Myapplication extends Application {
     }
 
 
-    public static Retrofit getRetrofit() {
+    public static Retrofit getRetroFit() {
         return retrofit;
     }
 
@@ -55,6 +55,6 @@ public class Myapplication extends Application {
     }
 
     public static void setUser(Owner user) {
-        Myapplication.user = user;
+        MyApplication.user = user;
     }
 }

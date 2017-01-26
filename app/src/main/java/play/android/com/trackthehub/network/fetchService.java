@@ -9,7 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.android.com.trackthehub.Myapplication;
+import play.android.com.trackthehub.MyApplication;
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.model.Repo;
 import play.android.com.trackthehub.util.RetrofitInterface;
@@ -18,15 +18,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class fetchService extends IntentService {
+public class FetchService extends IntentService {
 
 
     public static final String ACTION_DATA_UPDATED = "play.android.com.trackthehub.updated";
     public static final String ACTION_UPDATE_DATA = "play.android.com.trackthehub.update";
     public static final String TAG = "error.trackthehub";
 
-    public fetchService() {
-        super("fetchService");
+    public FetchService() {
+        super("FetchService");
     }
 
 
@@ -35,7 +35,7 @@ public class fetchService extends IntentService {
 
         if (intent.getAction().equals(ACTION_UPDATE_DATA)) {
             String hash = Utils.getString("authhash", "null", getApplicationContext());
-            RetrofitInterface.User userinterface = Myapplication.getRetrofit().
+            RetrofitInterface.User userinterface = MyApplication.getRetroFit().
                     create(RetrofitInterface.User.class);
 
             Call<List<Repo>> getreposcall = userinterface.getrepos(hash);
@@ -47,7 +47,7 @@ public class fetchService extends IntentService {
 
                         List<Repo> mlist = response.body();
                         ArrayList<ContentValues> values = new ArrayList<>();
-                        String username = Myapplication.getUser().getLogin();
+                        String username = MyApplication.getUser().getLogin();
                         for (Repo repo : mlist) {
 
                             ContentValues value = new ContentValues();
@@ -65,7 +65,7 @@ public class fetchService extends IntentService {
                         }
 
                         ContentValues[] array = values.toArray(new ContentValues[values.size()]);
-                        getContentResolver().bulkInsert(MyContract.buildrepowithuser(username), array);
+                        getContentResolver().bulkInsert(MyContract.buildRepoWithUser(username), array);
 
                         Intent DataUpdatedIntent = new Intent();
                         DataUpdatedIntent.setAction(ACTION_DATA_UPDATED);

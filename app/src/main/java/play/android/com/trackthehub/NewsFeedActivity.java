@@ -36,14 +36,14 @@ public class NewsFeedActivity extends AppCompatActivity {
     Radater radater;
 
 
-    void updateui() {
+    void updateUi() {
         mlist.clear();
         mSwipeRefreshLayout.setRefreshing(true);
-        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
+        RetrofitInterface.User userinterface = MyApplication.getRetroFit().create(
                 RetrofitInterface.User.class);
 
         Call<List<play.android.com.trackthehub.model.Event>> geteventscall = userinterface.get_received_events(Utils.getString("authhash",
-                "null", this), Myapplication.getUser().getLogin());
+                "null", this), MyApplication.getUser().getLogin());
 
         geteventscall.enqueue(new Callback<List<play.android.com.trackthehub.model.Event>>() {
             @Override
@@ -129,13 +129,13 @@ public class NewsFeedActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(radater);
 
-        updateui();
+        updateUi();
 
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                updateui();
+                updateUi();
 
 
             }

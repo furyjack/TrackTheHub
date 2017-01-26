@@ -28,7 +28,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class myissuefragment extends Fragment {
+public class MyIssueFragment extends Fragment {
 
     RecyclerView mRepoList;
     ArrayList<Issues> mlist;
@@ -38,18 +38,18 @@ public class myissuefragment extends Fragment {
     public static final String TAG = "error.trackthehub";
 
 
-    public myissuefragment() {
+    public MyIssueFragment() {
         // Required empty public constructor
     }
 
 
-    public void updateui() {
+    public void updateUi() {
         mRefreshLayout.setRefreshing(true);
-        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
+        RetrofitInterface.User userinterface = MyApplication.getRetroFit().create(
                 RetrofitInterface.User.class);
 
         Call<List<Event>> geteventscall = userinterface.getevents(Utils.getString("authhash",
-                "null", getContext()), Myapplication.getUser().getLogin());
+                "null", getContext()), MyApplication.getUser().getLogin());
 
         geteventscall.enqueue(new Callback<List<Event>>() {
             @Override
@@ -101,11 +101,11 @@ public class myissuefragment extends Fragment {
         adapter = new IssueAdapter(mlist, getContext());
         mRepoList.setAdapter(adapter);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
-        updateui();
+        updateUi();
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                updateui();
+                updateUi();
             }
         });
 
