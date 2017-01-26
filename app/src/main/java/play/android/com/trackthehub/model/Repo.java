@@ -89,8 +89,19 @@ public class Repo {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public String getLanguage() {
+        return language;
+    }
 
+    public Integer getStargazersCount() {
+        return stargazersCount;
+    }
 
-
+    public Integer getForksCount() {
+        return forksCount;
+    }
 }

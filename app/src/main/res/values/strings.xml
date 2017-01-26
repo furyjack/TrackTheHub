@@ -34,4 +34,6 @@
     <string name="star">star</string>
     <string name="TypeIssues">IssuesEvent</string>
     <string name="TypePush">PushEvent</string>
+    <string name="TypeCreate">CreateEvent</string>
+    <string name="TypeFork">ForkEvent</string>
 </resources>

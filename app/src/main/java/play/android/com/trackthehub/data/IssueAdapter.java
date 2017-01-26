@@ -49,14 +49,14 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
         return mlist.size();
     }
 
-    public class IssueViewHolder extends RecyclerView.ViewHolder
+    class IssueViewHolder extends RecyclerView.ViewHolder
     {
 
         TextView reponame,desc,event;
 
 
 
-        public IssueViewHolder(View itemView) {
+         IssueViewHolder(View itemView) {
             super(itemView);
             reponame=(TextView)itemView.findViewById(R.id.tvRepo);
             desc=(TextView)itemView.findViewById(R.id.tvDesc);

@@ -37,4 +37,16 @@ public class Payload {
     public Issue getIssue() {
         return issue;
     }
+
+    public Commit getCommit()
+    {
+        if(commits.size()>0)
+        return commits.get(0);
+        else
+         return null;
+    }
+
+    public String getRef() {
+        return ref;
+    }
 }

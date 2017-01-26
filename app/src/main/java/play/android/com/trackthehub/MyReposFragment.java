@@ -2,6 +2,9 @@ package play.android.com.trackthehub;
 
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,33 +13,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.data.MyProvider;
 import play.android.com.trackthehub.data.RepoAdapter;
-import play.android.com.trackthehub.util.Repo;
-import play.android.com.trackthehub.util.Utils;
+import play.android.com.trackthehub.network.fetchService;
 
 
 public class MyReposFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     RecyclerView mRepoList;
-    ArrayList<Repo> mlist;
-    ProgressBar pbar;
     public static  final int REPO_LOADER=0;
- RepoAdapter adapter;
+    RepoAdapter adapter;
     TextView tvEmpty;
-    BroadcastReceiver receiver;
+    SwipeRefreshLayout mRefreshLayout;
+    BroadcastReceiver DataUpdateReceiver;
     public MyReposFragment() {
 
     }
@@ -48,26 +47,50 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
 
         View rootview= inflater.inflate(R.layout.fragment_my_repos, container, false);
         mRepoList=(RecyclerView)rootview.findViewById(R.id.rvRepoList);
-        pbar=(ProgressBar)rootview.findViewById(R.id.pbar_repo_fragment);
+        mRefreshLayout=(SwipeRefreshLayout)rootview.findViewById(R.id.mSwipeRefreshLayout);
         mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
         tvEmpty=(TextView)rootview.findViewById(R.id.tv_empty);
-        pbar.setVisibility(View.INVISIBLE);
 
 
-        adapter=new RepoAdapter(null,pbar,getContext());
+        adapter=new RepoAdapter(null,getContext());
         mRepoList.setAdapter(adapter);
 
-        String username=Myapplication.getUser().getLogin();
+        DataUpdateReceiver=new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                mRefreshLayout.setRefreshing(false);
+            }
+        };
+
+        IntentFilter intentFilter=new IntentFilter(fetchService.ACTION_DATA_UPDATED);
+        getContext().registerReceiver(DataUpdateReceiver,intentFilter);
+
+        final String username=Myapplication.getUser().getLogin();
         String args[]={username};
         Cursor repos = getContext().getContentResolver().query(MyContract.buildrepowithuser(username),
                                                                MyContract.RepoEntry.projection,
                                                                MyProvider.sRepoSettingSelection, args, null);
         if(repos!=null && repos.getCount()==0)
         {
-
-
-
+            mRefreshLayout.setRefreshing(true);
+            Intent i=new Intent(getContext(), fetchService.class);
+            i.setAction(fetchService.ACTION_UPDATE_DATA);
+            getContext().startService(i);
+            repos.close();
         }
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                getContext().getContentResolver().delete(MyContract.buildrepowithuser(username),null,null);
+                Intent i=new Intent(getContext(), fetchService.class);
+                i.setAction(fetchService.ACTION_UPDATE_DATA);
+                getContext().startService(i);
+
+            }
+        });
 
 
 
@@ -83,8 +106,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String usename;
-        usename= Utils.getString("username","null",getContext());
+        String usename=Myapplication.getUser().getLogin();
         String[]argument={usename};
 
         Uri repoRetrieve=MyContract.buildrepowithuser(usename);
@@ -101,6 +123,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
         adapter.swapCursor(data);
 
 
+
     }
 
     @Override
@@ -113,6 +136,7 @@ public class MyReposFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onDestroy() {
         super.onDestroy();
+        getContext().unregisterReceiver(DataUpdateReceiver);
 
     }
 }

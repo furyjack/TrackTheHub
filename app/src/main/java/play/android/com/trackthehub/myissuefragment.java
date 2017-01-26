@@ -3,12 +3,12 @@ package play.android.com.trackthehub;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import play.android.com.trackthehub.data.IssueAdapter;
 import play.android.com.trackthehub.model.Event;
 import play.android.com.trackthehub.model.Issue;
 import play.android.com.trackthehub.util.Issues;
-import play.android.com.trackthehub.util.Repo;
 import play.android.com.trackthehub.util.RetrofitInterface;
 import play.android.com.trackthehub.util.Utils;
 import retrofit2.Call;
@@ -32,9 +31,10 @@ import retrofit2.Response;
 public class myissuefragment extends Fragment {
 
     RecyclerView mRepoList;
-    ArrayList<Repo> mlist;
-    ProgressBar pbar;
+    ArrayList<Issues> mlist;
+    IssueAdapter adapter;
 
+    SwipeRefreshLayout mRefreshLayout;
     public static final String TAG = "error.trackthehub";
 
 
@@ -42,25 +42,10 @@ public class myissuefragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        final View rootview = inflater.inflate(R.layout.fragment_my_repos, container, false);
-        mRepoList = (RecyclerView) rootview.findViewById(R.id.rvRepoList);
-        pbar = (ProgressBar) rootview.findViewById(R.id.pbar_repo_fragment);
-        pbar.setVisibility(View.INVISIBLE);
-        final ArrayList<Issues> mlist = new ArrayList<>();
-        final IssueAdapter adapter = new IssueAdapter(mlist, getContext());
-        mRepoList.setAdapter(adapter);
-        mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
-
+    public void updateui()
+    {
+        mRefreshLayout.setRefreshing(true);
         RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
                 RetrofitInterface.User.class);
 
@@ -87,6 +72,7 @@ public class myissuefragment extends Fragment {
 
                     }
                     adapter.notifyDataSetChanged();
+                    mRefreshLayout.setRefreshing(false);
 
 
                 } else {
@@ -102,6 +88,31 @@ public class myissuefragment extends Fragment {
 
             }
         });
+    }
+
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        final View rootview = inflater.inflate(R.layout.fragment_my_repos, container, false);
+        mRepoList = (RecyclerView) rootview.findViewById(R.id.rvRepoList);
+        mRefreshLayout=(SwipeRefreshLayout)rootview.findViewById(R.id.mSwipeRefreshLayout);
+        mlist = new ArrayList<>();
+        adapter = new IssueAdapter(mlist, getContext());
+        mRepoList.setAdapter(adapter);
+        mRepoList.setLayoutManager(new LinearLayoutManager(getContext()));
+        updateui();
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateui();
+            }
+        });
+
+
 
 
         return rootview;

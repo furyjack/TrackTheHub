@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import play.android.com.trackthehub.R;
@@ -17,22 +16,18 @@ public class RepoAdapter extends RecyclerViewCursorAdapter<RepoAdapter.ListViewH
 
 
 
-    boolean firstloaded=false;
-    ProgressBar pbar;
+
+
     Context c;
 
-    public RepoAdapter(Cursor cursor, ProgressBar pbar,Context context) {
+    public RepoAdapter(Cursor cursor,Context context) {
         super(cursor);
-        this.pbar=pbar;
         c=context;
     }
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewrepo,parent,false);
-        if(!firstloaded)
-            pbar.setVisibility(View.GONE);
-        firstloaded=true;
 
         return new ListViewHolder(v);
     }
@@ -43,7 +38,7 @@ public class RepoAdapter extends RecyclerViewCursorAdapter<RepoAdapter.ListViewH
         String title,decs,lang,star,fork,stoday;
         title=cursor.getString(cursor.getColumnIndex(MyContract.RepoEntry.COLUMN_TITLE));
         decs=cursor.getString(cursor.getColumnIndex(MyContract.RepoEntry.COLUMN_DESC));
-        decs=(decs.equals("null"))?".":decs;
+        decs=(decs==null)?".":decs;
         lang=cursor.getString(cursor.getColumnIndex(MyContract.RepoEntry.COLUMN_LANG));
         star=cursor.getString(cursor.getColumnIndex(MyContract.RepoEntry.COLUMN_STARS));
         fork=cursor.getString(cursor.getColumnIndex(MyContract.RepoEntry.COLUMN_FORKS));

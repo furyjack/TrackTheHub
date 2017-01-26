@@ -1,9 +1,5 @@
 package play.android.com.trackthehub;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import org.json.JSONException;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import play.android.com.trackthehub.network.fetchService;
+import play.android.com.trackthehub.model.Commit;
 import play.android.com.trackthehub.util.Event;
+import play.android.com.trackthehub.util.RetrofitInterface;
 import play.android.com.trackthehub.util.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TimeLineActivity extends AppCompatActivity {
 
@@ -32,9 +32,109 @@ public class TimeLineActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     ArrayList<Event> mlist;
-    BroadcastReceiver mreciever;
     Radater radater;
     TextView TVTITLE;
+
+
+
+    void updateui()
+    {
+        mlist.clear();
+        mSwipeRefreshLayout.setRefreshing(true);
+        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
+                RetrofitInterface.User.class);
+
+        Call<List<play.android.com.trackthehub.model.Event>> geteventscall = userinterface.get_timeline_events(Utils.getString("authhash",
+                "null", this));
+
+        geteventscall.enqueue(new Callback<List<play.android.com.trackthehub.model.Event>>() {
+            @Override
+            public void onResponse(Call<List<play.android.com.trackthehub.model.Event>> call, Response<List<play.android.com.trackthehub.model.Event>> response) {
+
+                if(response.code()==200)
+                {
+                    List<play.android.com.trackthehub.model.Event>list=response.body();
+                    for(play.android.com.trackthehub.model.Event event:list)
+                    {
+                        if(event.getType().equals(getString(R.string.TypePush)))
+                        {
+                            Event e=new Event(event.getActor().getLogin(),
+                                    event.getRepo().getName(),
+                                    getString(R.string.TypePush));
+
+                            Commit c=event.getPayload().getCommit();
+                            if(c!=null) {
+                                e.setCommit(c.getSha().substring(0, 7));
+                                e.setCommitMessage(c.getMessage());
+                            }
+                            e.setBranch(event.getPayload().getRef().split("/")[2]);
+                            mlist.add(e);
+
+
+
+
+
+                        }
+                        else if(event.getType().equals(getString(R.string.TypeCreate)))
+                        {
+                            Event e=new Event(event.getActor().getLogin(),
+                                    event.getRepo().getName(),
+                                    getString(R.string.TypeCreate));
+                            mlist.add(e);
+
+
+
+                        }
+                        else if(event.getType().equals(getString(R.string.TypeFork)))
+                        {
+
+                            Event e=new Event(event.getActor().getLogin(),
+                                    event.getRepo().getName(),
+                                    getString(R.string.TypeFork));
+
+                            e.setBranch(e.user+"/"+e.repo.split("/")[1]);
+                            mlist.add(e);
+
+
+
+
+                        }
+
+
+
+                    }
+
+
+                    radater.notifyDataSetChanged();
+                    mSwipeRefreshLayout.setRefreshing(false);
+
+
+
+
+
+                }
+                else
+                {
+                    Log.d(TAG, "onResponse: timeline "+response.code());
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<play.android.com.trackthehub.model.Event>> call, Throwable t) {
+
+                Toast.makeText(TimeLineActivity.this, "Some Error Occured", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: timeline");
+
+            }
+        });
+
+
+
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,59 +155,18 @@ public class TimeLineActivity extends AppCompatActivity {
         radater=new Radater(mlist);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(radater);
-        mSwipeRefreshLayout.setRefreshing(true);
-
-        mreciever=new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String data=intent.getStringExtra("data");
-                try {
-                    mlist.addAll(Utils.geteventlist(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "onReceive: error in parsing json events");
-                }
-                radater.notifyDataSetChanged();
-                mSwipeRefreshLayout.setRefreshing(false);
+       updateui();
 
 
-            }
-        };
-
-        IntentFilter filter=new IntentFilter("play.android.com.trackthehub.timeline");
-
-        this.registerReceiver(mreciever,filter);
-        String username=Utils.getString("username","null",this);
-
-        Intent i=new Intent(this,fetchService.class);
-        i.putExtra("code",4);
-        i.putExtra("user",username);
-        i.putExtra("url","https://api.github.com/events" +"?oauth_token="+Utils.getString(username+":token","null",this));
-        this.startService(i);
 
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                String username=Utils.getString("username","null",TimeLineActivity.this);
-                Intent i=new Intent(TimeLineActivity.this,fetchService.class);
-                i.putExtra("code",4);
-                i.putExtra("user",username);
-                i.putExtra("url","https://api.github.com/events");
-                TimeLineActivity.this.startService(i);
-
-
-
+                updateui();
 
             }
         });
-
-
-
-
-
-
-
 
 
 
@@ -121,7 +180,7 @@ public class TimeLineActivity extends AppCompatActivity {
         TextView Name,Desc,event;
 
 
-        public viewholder(View itemView) {
+         viewholder(View itemView) {
             super(itemView);
             Name=(TextView)itemView.findViewById(R.id.tvRepo);
             Desc=(TextView)itemView.findViewById(R.id.tvDesc);
@@ -137,7 +196,7 @@ public class TimeLineActivity extends AppCompatActivity {
 
         ArrayList<Event>mlist;
 
-        public Radater(ArrayList<Event> mlist) {
+        Radater(ArrayList<Event> mlist) {
             this.mlist = mlist;
         }
 

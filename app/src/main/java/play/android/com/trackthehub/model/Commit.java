@@ -22,4 +22,11 @@ public class Commit {
     @Expose
     public String url;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public String getSha() {
+        return sha;
+    }
 }

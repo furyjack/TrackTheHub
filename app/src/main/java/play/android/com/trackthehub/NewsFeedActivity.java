@@ -1,9 +1,6 @@
 package play.android.com.trackthehub;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import org.json.JSONException;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import play.android.com.trackthehub.network.fetchService;
+import play.android.com.trackthehub.model.Commit;
 import play.android.com.trackthehub.util.Event;
+import play.android.com.trackthehub.util.RetrofitInterface;
 import play.android.com.trackthehub.util.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
@@ -37,6 +38,104 @@ public class NewsFeedActivity extends AppCompatActivity {
 
 
 
+    void updateui()
+    {
+        mlist.clear();
+        mSwipeRefreshLayout.setRefreshing(true);
+        RetrofitInterface.User userinterface = Myapplication.getRetrofit().create(
+                RetrofitInterface.User.class);
+
+        Call<List<play.android.com.trackthehub.model.Event>> geteventscall = userinterface.get_received_events(Utils.getString("authhash",
+                "null", this), Myapplication.getUser().getLogin());
+
+        geteventscall.enqueue(new Callback<List<play.android.com.trackthehub.model.Event>>() {
+            @Override
+            public void onResponse(Call<List<play.android.com.trackthehub.model.Event>> call, Response<List<play.android.com.trackthehub.model.Event>> response) {
+
+                if(response.code()==200)
+                {
+                    List<play.android.com.trackthehub.model.Event>list=response.body();
+                    for(play.android.com.trackthehub.model.Event event:list)
+                    {
+                        if(event.getType().equals(getString(R.string.TypePush)))
+                        {
+                            Event e=new Event(event.getActor().getLogin(),
+                                    event.getRepo().getName(),
+                                    getString(R.string.TypePush));
+
+                            Commit c=event.getPayload().getCommit();
+                            if(c!=null) {
+                                e.setCommit(c.getSha().substring(0, 7));
+                                e.setCommitMessage(c.getMessage());
+                            }
+                            e.setBranch(event.getPayload().getRef().split("/")[2]);
+                            mlist.add(e);
+
+
+
+
+
+                        }
+                        else if(event.getType().equals(getString(R.string.TypeCreate)))
+                        {
+                            Event e=new Event(event.getActor().getLogin(),
+                                    event.getRepo().getName(),
+                                    getString(R.string.TypeCreate));
+                            mlist.add(e);
+
+
+
+                        }
+                        else if(event.getType().equals(getString(R.string.TypeFork)))
+                        {
+
+                            Event e=new Event(event.getActor().getLogin(),
+                                    event.getRepo().getName(),
+                                    getString(R.string.TypeFork));
+
+                            e.setBranch(e.user+"/"+e.repo.split("/")[1]);
+                            mlist.add(e);
+
+
+
+
+                        }
+
+
+
+                    }
+
+
+                    radater.notifyDataSetChanged();
+                    mSwipeRefreshLayout.setRefreshing(false);
+
+
+
+
+
+                }
+                else
+                {
+                    Log.d(TAG, "onResponse: newsfeed "+response.code());
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<play.android.com.trackthehub.model.Event>> call, Throwable t) {
+
+                Toast.makeText(NewsFeedActivity.this, "Some Error Occured", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: newsfeed");
+
+            }
+        });
+
+
+
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,55 +153,18 @@ public class NewsFeedActivity extends AppCompatActivity {
         radater=new NewsFeedActivity.Radater(mlist);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(radater);
-        mSwipeRefreshLayout.setRefreshing(true);
-        mreciever=new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String data=intent.getStringExtra("data");
-                try {
-                    mlist.addAll(Utils.geteventlist(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "onReceive: error in parsing json events");
-                }
-                radater.notifyDataSetChanged();
-                mSwipeRefreshLayout.setRefreshing(false);
 
-
-            }
-        };
-
-        IntentFilter filter=new IntentFilter("play.android.com.trackthehub.newsfeed");
-
-        this.registerReceiver(mreciever,filter);
-        String username=Utils.getString("username","null",this);
-
-        Intent i=new Intent(this,fetchService.class);
-        i.putExtra("code",5);
-        i.putExtra("user",username);
-        i.putExtra("url","https://api.github.com/users/"+username +"/received_events?oauth_token="+Utils.getString(username+":token","null",NewsFeedActivity.this));
-        this.startService(i);
+        updateui();
 
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                String username=Utils.getString("username","null",NewsFeedActivity.this);
-                Intent i=new Intent(NewsFeedActivity.this,fetchService.class);
-                i.putExtra("code",5);
-                i.putExtra("user",username);
-                i.putExtra("url","https://api.github.com/users/"+username +"/received_events?oauth_token="+Utils.getString(username+":token","null",NewsFeedActivity.this));
-                NewsFeedActivity.this.startService(i);
-
-
+              updateui();
 
 
             }
         });
-
-
-
-
 
 
 
