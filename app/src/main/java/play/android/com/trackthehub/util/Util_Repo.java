@@ -1,30 +1,30 @@
 package play.android.com.trackthehub.util;
 
 
-public class Util_Repo {
+ class Util_Repo {
 
 
 
 
-    public String Title;
+    private String Title;
 
 
-    public String desc;
+    private String desc;
 
 
-    public String Lang;
+    private String Lang;
 
 
-    public String stars;
+    private String stars;
 
 
-    public String forks;
+    private String forks;
 
 
-    public String startoday;
+    private String startoday;
 
 
-    public String user;
+    private String user;
 
     public Util_Repo(String title, String desc, String lang, String stars, String forks, String startoday, String user) {
        super();
