@@ -36,4 +36,8 @@
     <string name="TypePush">PushEvent</string>
     <string name="TypeCreate">CreateEvent</string>
     <string name="TypeFork">ForkEvent</string>
+    <string name="error">something went wrong</string>
+    <string name="invalidcredentials">Invalid Credentials</string>
+    <string name="success">success</string>
+    <string name="error1">something went wrong</string>
 </resources>

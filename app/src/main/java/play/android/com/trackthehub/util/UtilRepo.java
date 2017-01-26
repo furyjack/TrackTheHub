@@ -1,7 +1,7 @@
 package play.android.com.trackthehub.util;
 
 
- class Util_Repo {
+ class UtilRepo {
 
 
 
@@ -26,7 +26,7 @@ package play.android.com.trackthehub.util;
 
     private String user;
 
-    public Util_Repo(String title, String desc, String lang, String stars, String forks, String startoday, String user) {
+    public UtilRepo(String title, String desc, String lang, String stars, String forks, String startoday, String user) {
        super();
 
         Title = title;
@@ -38,7 +38,7 @@ package play.android.com.trackthehub.util;
         this.user = user;
     }
 
-    public Util_Repo() {
+    public UtilRepo() {
 super();
     }
 }

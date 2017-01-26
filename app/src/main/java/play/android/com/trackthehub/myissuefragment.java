@@ -18,7 +18,7 @@ import play.android.com.trackthehub.data.IssueAdapter;
 import play.android.com.trackthehub.model.Event;
 import play.android.com.trackthehub.model.Issue;
 import play.android.com.trackthehub.util.Issues;
-import play.android.com.trackthehub.util.RetrofitInterface;
+import play.android.com.trackthehub.util.RetroFitInterface;
 import play.android.com.trackthehub.util.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,10 +45,10 @@ public class MyIssueFragment extends Fragment {
 
     public void updateUi() {
         mRefreshLayout.setRefreshing(true);
-        RetrofitInterface.User userinterface = MyApplication.getRetroFit().create(
-                RetrofitInterface.User.class);
+        RetroFitInterface.User userinterface = MyApplication.getRetroFit().create(
+                RetroFitInterface.User.class);
 
-        Call<List<Event>> geteventscall = userinterface.getevents(Utils.getString("authhash",
+        Call<List<Event>> geteventscall = userinterface.getEvents(Utils.getString("authhash",
                 "null", getContext()), MyApplication.getUser().getLogin());
 
         geteventscall.enqueue(new Callback<List<Event>>() {
@@ -83,7 +83,7 @@ public class MyIssueFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
-                Toast.makeText(getContext(), "wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error1, Toast.LENGTH_SHORT).show();
 
             }
         });

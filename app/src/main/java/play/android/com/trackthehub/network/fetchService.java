@@ -12,7 +12,7 @@ import java.util.List;
 import play.android.com.trackthehub.MyApplication;
 import play.android.com.trackthehub.data.MyContract;
 import play.android.com.trackthehub.model.Repo;
-import play.android.com.trackthehub.util.RetrofitInterface;
+import play.android.com.trackthehub.util.RetroFitInterface;
 import play.android.com.trackthehub.util.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,10 +35,10 @@ public class FetchService extends IntentService {
 
         if (intent.getAction().equals(ACTION_UPDATE_DATA)) {
             String hash = Utils.getString("authhash", "null", getApplicationContext());
-            RetrofitInterface.User userinterface = MyApplication.getRetroFit().
-                    create(RetrofitInterface.User.class);
+            RetroFitInterface.User userinterface = MyApplication.getRetroFit().
+                    create(RetroFitInterface.User.class);
 
-            Call<List<Repo>> getreposcall = userinterface.getrepos(hash);
+            Call<List<Repo>> getreposcall = userinterface.getRepos(hash);
             getreposcall.enqueue(new Callback<List<Repo>>() {
                 @Override
                 public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {

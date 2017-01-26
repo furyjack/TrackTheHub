@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 import play.android.com.trackthehub.model.Owner;
-import play.android.com.trackthehub.util.RetrofitInterface;
+import play.android.com.trackthehub.util.RetroFitInterface;
 import play.android.com.trackthehub.util.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,15 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         final String password = etPassword.getText().toString();
         final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
 
-        RetrofitInterface.User userinterface = MyApplication.getRetroFit().create(RetrofitInterface.User.class);
-        Call<Owner> logincall = userinterface.getuser(basicAuth);
+        RetroFitInterface.User userinterface = MyApplication.getRetroFit().create(RetroFitInterface.User.class);
+        Call<Owner> logincall = userinterface.getUser(basicAuth);
 
         logincall.enqueue(new Callback<Owner>() {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
                 if (response.code() == 200) {
                     MyApplication.setUser(response.body());
-                    Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.success, Toast.LENGTH_SHORT).show();
                     Utils.SetString("authhash", basicAuth, getApplicationContext());
                     Utils.SetString("loggedin", "true", getApplicationContext());
                     pbar.setVisibility(View.INVISIBLE);
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.invalidcredentials, Toast.LENGTH_SHORT).show();
                     pbar.setVisibility(View.INVISIBLE);
                     btnlogin.setVisibility(View.VISIBLE);
 
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Owner> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                 pbar.setVisibility(View.INVISIBLE);
                 btnlogin.setVisibility(View.VISIBLE);
             }

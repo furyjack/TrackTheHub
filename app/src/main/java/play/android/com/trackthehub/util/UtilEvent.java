@@ -1,7 +1,7 @@
 package play.android.com.trackthehub.util;
 
 
-public class Util_Event {
+public class UtilEvent {
 
 
     public String user;
@@ -11,7 +11,7 @@ public class Util_Event {
     public String type;
     private String commitMessage;
 
-    public Util_Event(String user, String repo, String type) {
+    public UtilEvent(String user, String repo, String type) {
         this.user = user;
         this.repo = repo;
         this.type = type;
@@ -41,6 +41,6 @@ public class Util_Event {
         this.branch = branch;
     }
 
-    public Util_Event() {
+    public UtilEvent() {
     }
 }
