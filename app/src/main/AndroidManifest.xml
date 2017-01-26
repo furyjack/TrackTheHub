@@ -3,7 +3,7 @@
     package="play.android.com.trackthehub">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".Myapplication"
@@ -28,16 +28,14 @@
         <provider
             android:name=".data.MyProvider"
             android:authorities="play.android.com.trackthehub"
-            android:exported="false"
-            />
+            android:exported="false" />
 
         <activity android:name=".NewsFeedActivity" />
         <activity android:name=".TimeLineActivity">
 
         </activity>
 
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-          />
+        <activity android:name="com.google.android.gms.ads.AdActivity" />
 
         <receiver android:name=".RepoWidgetProvider">
             <intent-filter>
@@ -52,8 +50,8 @@
 
         <service
             android:name=".widgetintentservice"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false">
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS">
 
         </service>
 

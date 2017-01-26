@@ -13,20 +13,20 @@ import java.util.ArrayList;
 import play.android.com.trackthehub.R;
 import play.android.com.trackthehub.util.Issues;
 
-public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHolder>{
+public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHolder> {
 
-    ArrayList<Issues>mlist;
-    Context C;
+    private ArrayList<Issues> mlist;
+    private Context mContext;
 
-    public IssueAdapter(ArrayList<Issues> mlist,Context context) {
+    public IssueAdapter(ArrayList<Issues> mlist, Context context) {
         this.mlist = mlist;
-        C=context;
+        mContext = context;
     }
 
     @Override
     public IssueViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        return new IssueViewHolder(inflater.inflate(R.layout.cardviewissues,parent,false));
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new IssueViewHolder(inflater.inflate(R.layout.cardviewissues, parent, false));
     }
 
     @Override
@@ -36,10 +36,10 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
         holder.reponame.setText(mlist.get(position).Reponame);
         holder.desc.setText(mlist.get(position).desc);
 
-        String number=mlist.get(position).number;
-        String user=mlist.get(position).user;
-        String date=mlist.get(position).date.substring(0,10);
-        String event=String.format(C.getString(R.string.issueopen),number,date,user);
+        String number = mlist.get(position).number;
+        String user = mlist.get(position).user;
+        String date = mlist.get(position).date.substring(0, 10);
+        String event = String.format(mContext.getString(R.string.issueopen), number, date, user);
         holder.event.setText(event);
 
     }
@@ -49,24 +49,17 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
         return mlist.size();
     }
 
-    class IssueViewHolder extends RecyclerView.ViewHolder
-    {
+    class IssueViewHolder extends RecyclerView.ViewHolder {
 
-        TextView reponame,desc,event;
+        TextView reponame, desc, event;
 
-
-
-         IssueViewHolder(View itemView) {
+        IssueViewHolder(View itemView) {
             super(itemView);
-            reponame=(TextView)itemView.findViewById(R.id.tvRepo);
-            desc=(TextView)itemView.findViewById(R.id.tvDesc);
-            event=(TextView)itemView.findViewById(R.id.tvevent);
+            reponame = (TextView) itemView.findViewById(R.id.tvRepo);
+            desc = (TextView) itemView.findViewById(R.id.tvDesc);
+            event = (TextView) itemView.findViewById(R.id.tvevent);
         }
     }
-
-
-
-
 
 
 }
